@@ -11,6 +11,11 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
     
+    @property
+    def price(self):
+        """Backward-compatible alias for base_price."""
+        return self.base_price
+    
 class Category(models.Model):
     """Stores product categories, supporting hierarchy."""
     name = models.CharField(max_length=100, unique=True)
