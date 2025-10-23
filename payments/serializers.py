@@ -2,7 +2,6 @@
 # payments/serializers.py
 from rest_framework import serializers
 from .models import Payment, PaymentMethod, Transaction, Refund
-from orders.serializers import OrderListSerializer
 
 class PaymentMethodSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,24 +19,29 @@ class RefundSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PaymentSerializer(serializers.ModelSerializer):
-    
-    order = OrderListSerializer(read_only=True)
-    payment_method_display = serializers.CharField(source='get_payment_method_display', read_only=True)
-    status_display = serializers.CharField(source='get_status_display', read_only=True)
+    payment_method_display = serializers.SerializerMethodField()
+    status_display = serializers.SerializerMethodField()
     transactions = TransactionSerializer(many=True, read_only=True)
 
     class Meta:
         model = Payment
-        fields = '__all__'
-        read_only_fields = ('order', 'amount', 'currency', 'created_at', 'updated_at')
+        fields = [
+            'id', 'payment_method', 'payment_method_display', 'amount',
+            'status', 'status_display', 'transactions', 'timestamp'
+        ]
+
+    def get_payment_method_display(self, obj: Payment) -> str:
+        # Return the payment method name when available
+        return obj.payment_method.name if obj.payment_method else ''
+
+    def get_status_display(self, obj: Payment) -> str:
+        # Use the model's get_FOO_display if available
+        try:
+            return obj.get_status_display()
+        except Exception:
+            return obj.status
 
 class PaymentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = ('order', 'payment_method', 'amount', 'currency')
-
-    def validate(self, attrs):
-        order = attrs['order']
-        if order.payment.exists():
-            raise serializers.ValidationError("Payment already exists for this order.")
-        return attrs
+        fields = ('payment_method', 'amount')

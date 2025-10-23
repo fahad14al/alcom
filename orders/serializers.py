@@ -5,16 +5,17 @@ from products.serializers import ProductListSerializer
 from accounts.serializers import AddressSerializer
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    product = ProductListSerializer(read_only=True)
+    # product field removed because OrderItem.product is not defined on the model
     item_total = serializers.SerializerMethodField()
 
     class Meta:
         model = OrderItem
-        fields = '__all__'
+        # explicitly list fields that exist on the model
+        fields = ('id', 'order', 'quantity', 'price_at_purchase', 'item_total')
         read_only_fields = ('order', 'item_total')
 
     def get_item_total(self, obj):
-        return obj.quantity * obj.price
+        return obj.quantity * obj.price_at_purchase
 
 class ShippingMethodSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,7 +34,7 @@ class OrderListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('id', 'order_number', 'user', 'status', 'status_display',
+        fields = ('id', 'user', 'status', 'status_display',
                  'total_amount', 'item_count', 'created_at')
 
     def get_total_amount(self, obj):
@@ -44,21 +45,20 @@ class OrderListSerializer(serializers.ModelSerializer):
 
 class OrderDetailSerializer(OrderListSerializer):
     items = OrderItemSerializer(many=True, read_only=True)
-    shipping_address = AddressSerializer(read_only=True)
-    billing_address = AddressSerializer(read_only=True)
+    # Addresses are not currently defined on Order model; keep payload minimal
+    # If you add shipping_address/billing_address fields to the model, restore these.
 
     class Meta:
         model = Order
-        fields = ('id', 'order_number', 'user', 'status', 'status_display',
-                 'items', 'shipping_address', 'billing_address',
-                 'shipping_method', 'shipping_cost', 'tax_amount',
-                 'discount_amount', 'total_amount', 'payment_status',
-                 'notes', 'created_at', 'updated_at')
+        fields = ('id', 'user', 'status', 'status_display',
+                 'items', 'shipping_method', 'total_amount',
+                 'tracking_number', 'created_at', 'updated_at')
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ('shipping_address', 'billing_address', 'shipping_method', 'notes')
+        # Only include fields that exist on the model. Extend once addresses/notes exist.
+        fields = ('shipping_method',)
 
     def create(self, validated_data):
         # This will be handled in the view

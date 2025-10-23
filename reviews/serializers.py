@@ -30,13 +30,22 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ReviewCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ('product', 'rating', 'title', 'comment')
+        # To create a Review we require an existing Rating instance.
+        fields = ('rating', 'title', 'comment')
 
     def validate(self, attrs):
-        user = self.context['request'].user
-        product = attrs['product']
-        
-        if Review.objects.filter(user=user, product=product).exists():
-            raise serializers.ValidationError("You have already reviewed this product.")
-        
+        request_user = self.context['request'].user
+        rating = attrs.get('rating')
+        # Ensure the rating exists and belongs to the requesting user
+        if rating is None:
+            raise serializers.ValidationError({'rating': 'Rating is required.'})
+        if rating.user != request_user:
+            raise serializers.ValidationError('You can only create a review for your own rating.')
+        # Ensure a Review for this rating does not already exist
+        if Review.objects.filter(rating=rating).exists():
+            raise serializers.ValidationError('A review for this rating already exists.')
         return attrs
+
+    def create(self, validated_data):
+        # Create the Review linked to the provided Rating
+        return Review.objects.create(**validated_data)
