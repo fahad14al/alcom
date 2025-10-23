@@ -11,6 +11,8 @@ class CartViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return Cart.objects.none()
         return Cart.objects.filter(user=self.request.user)
 
     def get_object(self):
@@ -67,8 +69,13 @@ class CartItemViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        cart = Cart.objects.get(user=self.request.user)
-        return CartItem.objects.filter(cart=cart)
+        if getattr(self, 'swagger_fake_view', False):
+            return CartItem.objects.none()
+        try:
+            cart = Cart.objects.get(user=self.request.user)
+            return CartItem.objects.filter(cart=cart)
+        except Cart.DoesNotExist:
+            return CartItem.objects.none()
 
     def perform_create(self, serializer):
         cart, created = Cart.objects.get_or_create(user=self.request.user)

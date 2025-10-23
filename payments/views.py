@@ -12,6 +12,8 @@ class PaymentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return Payment.objects.none()
         return Payment.objects.filter(order__user=self.request.user)
 
     def get_serializer_class(self):

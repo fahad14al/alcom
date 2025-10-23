@@ -10,7 +10,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def get_queryset(self):
-        return Review.objects.filter(approved=True)
+        if getattr(self, 'swagger_fake_view', False):
+            return Review.objects.none()
+        return Review.objects.filter(is_approved=True)
 
     def get_serializer_class(self):
         if self.action == 'create':
