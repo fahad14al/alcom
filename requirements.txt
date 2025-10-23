@@ -1,0 +1,11 @@
+asgiref
+Django
+django-cors-headers
+django-filter
+djangorestframework
+drf-yasg
+Pillow
+pytz
+stripe
+sqlparse
+uritemplate
