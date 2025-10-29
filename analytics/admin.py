@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import ProductView, UserActivity, SearchQuery
+from .models import ProductView, PageView, SalesReport
 
 # Register your models here.
 admin.site.register(ProductView)
-admin.site.register(UserActivity)
-admin.site.register(SearchQuery)
+admin.site.register(PageView)
+admin.site.register(SalesReport)

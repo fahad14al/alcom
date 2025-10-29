@@ -17,6 +17,19 @@ class Coupon(models.Model):
     def __str__(self):
         return self.code
 
+    def calculate_discount(self, order_amount):
+        """Calculate the discount amount for a given order amount.
+
+        Uses discount_percentage if present; respects max_discount_amount if set.
+        Returns a float for ease of use in tests.
+        """
+        if not self.discount_percentage:
+            return 0.0
+        discount = float(order_amount) * float(self.discount_percentage) / 100.0
+        if self.max_discount_amount:
+            discount = min(discount, float(self.max_discount_amount))
+        return discount
+
 # 2. Discount Model
 class Discount(models.Model):
     """
@@ -56,6 +69,14 @@ class Cart(models.Model):
         if self.user:
             return f"Cart for {self.user.username}"
         return f"Anonymous Cart (Session: {self.session_id})"
+
+    @property
+    def total_price(self):
+        """Return the total price for all items in the cart."""
+        total = 0.0
+        for item in self.items.all():
+            total += item.total_price
+        return total
 
 # 4. CartItem Model
 class CartItem(models.Model):

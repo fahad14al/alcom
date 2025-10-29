@@ -1,5 +1,3 @@
-
-
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -57,6 +55,7 @@ class UserProfile(models.Model):
         related_name='profile'
     )
     bio = models.TextField(blank=True)
+    phone = models.CharField(max_length=20, blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     
     # You might consider moving the Address logic here or keeping it separate.
@@ -82,13 +81,10 @@ class Address(models.Model):
     # Fields for the address itself
     street_address = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
-    state_province = models.CharField(max_length=100, blank=True)
-    zip_code = models.CharField(max_length=20)
+    state = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100)
-    
-    # Flags to denote the address type
-    is_shipping = models.BooleanField(default=True)
-    is_billing = models.BooleanField(default=False)
+    address_type = models.CharField(max_length=50, default='shipping')
+
     
     # Optional: A label for the address (e.g., 'Home', 'Work')
     label = models.CharField(max_length=50, blank=True)
@@ -97,7 +93,7 @@ class Address(models.Model):
         verbose_name_plural = "Addresses"
 
     def __str__(self):
-        return f"{self.label or 'Address'} ({self.user.username})"
+        return f"{self.street_address}, {self.city}, {self.state}"
 
 # ---
 
