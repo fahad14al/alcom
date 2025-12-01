@@ -1,0 +1,25 @@
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Databases
+db.sqlite3
+*.db
+
+# Virtual environment
+myenv/
+.env
+
+# Jupyter Notebook specific files
+.ipynb_checkpoints
+
+# IDE-specific files
+.idea/
+.vscode/
+
+# Operating System Files
+.DS_Store
+Thumbs.db

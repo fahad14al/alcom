@@ -83,25 +83,14 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'accounts.User'
 
-# django-allauth (minimal) settings used by dj-rest-auth
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
-
-# django-allauth settings (commented out temporarily)
-# AUTHENTICATION_BACKENDS = [
-#     'django.contrib.auth.backends.ModelBackend',
-#     'allauth.account.auth_backends.AuthenticationBackend',
-# ]
-
-# ACCOUNT_EMAIL_VERIFICATION = 'optional'
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_SIGNUP_EMAIL_REQUIRED = True
+ACCOUNT_LOGIN_METHODS = ['username']
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # Add this at the top
