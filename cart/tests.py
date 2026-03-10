@@ -5,6 +5,7 @@ from datetime import timedelta
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from django.contrib.auth import get_user_model
+from decimal import Decimal
 from products.models import Category, Product, Brand
 from .models import Cart, CartItem, Coupon
 
@@ -22,10 +23,11 @@ class CartModelTests(TestCase):
         self.product = Product.objects.create(
             name='Test Product',
             slug='test-product',
-            base_price=99.99,
+            base_price=Decimal('99.99'),
             category=self.category,
             brand=self.brand,
-            is_active=True
+            is_active=True,
+            stock=10
         )
 
     def test_create_cart(self):
@@ -51,10 +53,11 @@ class CartItemModelTests(TestCase):
         self.product = Product.objects.create(
             name='Test Product',
             slug='test-product',
-            base_price=99.99,
+            base_price=Decimal('99.99'),
             category=self.category,
             brand=self.brand,
-            is_active=True
+            is_active=True,
+            stock=10
         )
         self.cart = Cart.objects.create(user=self.user)
 
@@ -76,7 +79,7 @@ class CartItemModelTests(TestCase):
             product=self.product,
             quantity=3
         )
-        expected_total = 3 * 99.99
+        expected_total = Decimal('299.97')
         self.assertEqual(cart_item.total_price, expected_total)
 
     def test_cart_total_with_items(self):
@@ -85,19 +88,18 @@ class CartItemModelTests(TestCase):
         product2 = Product.objects.create(
             name='Product Two',
             slug='product-two',
-            base_price=49.99,
+            base_price=Decimal('49.99'),
             category=self.category,
-
-
             brand=self.brand,
-            is_active=True
+            is_active=True,
+            stock=10
         )
         
         # Add items to cart
         CartItem.objects.create(cart=self.cart, product=self.product, quantity=2)
         CartItem.objects.create(cart=self.cart, product=product2, quantity=1)
         
-        expected_total = (2 * 99.99) + (1 * 49.99)
+        expected_total = Decimal('249.97')
         self.assertEqual(self.cart.total_price, expected_total)
 
 class CouponModelTests(TestCase):
@@ -135,10 +137,10 @@ class CouponModelTests(TestCase):
         )
 
         # Test percentage discount
-        self.assertAlmostEqual(coupon_percentage.calculate_discount(100), 10.0)
+        self.assertEqual(coupon_percentage.calculate_discount(Decimal('100.00')), Decimal('10.00'))
 
         # Test fixed discount (here modeled as percentage for backward compatibility)
-        self.assertAlmostEqual(coupon_fixed.calculate_discount(100), 5.0)
+        self.assertEqual(coupon_fixed.calculate_discount(Decimal('100.00')), Decimal('5.00'))
 
 class CartAPITests(APITestCase):
     def setUp(self):
@@ -153,12 +155,15 @@ class CartAPITests(APITestCase):
         self.product = Product.objects.create(
             name='API Test Product',
             slug='api-test-product',
-            base_price=79.99,
+            base_price=Decimal('79.99'),
             category=self.category,
             brand=self.brand,
-            is_active=True
+            is_active=True,
+            stock=10
         )
         self.client.force_authenticate(user=self.user)
+        # Ensure cart exists for tests that access it directly
+        Cart.objects.get_or_create(user=self.user)
 
     def test_get_user_cart(self):
         """Test retrieving user's cart"""
@@ -172,7 +177,7 @@ class CartAPITests(APITestCase):
         """Test adding item to cart via API"""
         url = '/api/cart/cart-items/'
         data = {
-            'product': self.product.id,
+            'product_id': self.product.id,
             'quantity': 2
         }
         response = self.client.post(url, data)

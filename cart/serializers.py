@@ -1,19 +1,35 @@
 # cart/serializers.py
 from rest_framework import serializers
 from .models import Cart, CartItem, Coupon, Discount
+from products.models import Product
 from products.serializers import ProductListSerializer
 
 class CartItemSerializer(serializers.ModelSerializer):
+    product_id = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all(), source='product', write_only=True
+    )
     product = ProductListSerializer(read_only=True)
     total_price = serializers.SerializerMethodField()
 
     class Meta:
         model = CartItem
-        fields = ('id', 'cart', 'product', 'quantity', 'total_price')
+        fields = ('id', 'cart', 'product', 'product_id', 'quantity', 'total_price')
         read_only_fields = ('cart', 'total_price')
 
     def get_total_price(self, obj):
         return obj.quantity * obj.product.price
+
+    def validate(self, data):
+        product = data.get('product')
+        quantity = data.get('quantity')
+        if product and quantity > product.stock:
+            raise serializers.ValidationError(f"Only {product.stock} items in stock.")
+        return data
+
+    def validate_quantity(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Quantity must be greater than zero.")
+        return value
 
 class CartSerializer(serializers.ModelSerializer):
     items = CartItemSerializer(many=True, read_only=True)
@@ -36,7 +52,7 @@ class CartSerializer(serializers.ModelSerializer):
 
     def get_discount_amount(self, obj):
         if obj.coupon:
-            return obj.coupon.discount_amount
+            return obj.coupon.calculate_discount(self.get_total_price(obj))
         return 0
 
     def get_final_price(self, obj):

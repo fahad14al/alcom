@@ -85,10 +85,10 @@ class PaymentAPITests(APITestCase):
         url = '/api/payments/payment-methods/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
         
         # Should only return active methods
-        method_names = [method['name'] for method in response.data]
+        method_names = [method['name'] for method in response.data['results']]
         self.assertIn('Credit Card', method_names)
         self.assertIn('PayPal', method_names)
 
@@ -96,6 +96,7 @@ class PaymentAPITests(APITestCase):
         """Test creating a payment"""
         url = '/api/payments/payments/'
         data = {
+            'order': self.order.id,
             'payment_method': self.credit_card.id,
             'amount': '99.99'
         }
@@ -138,7 +139,7 @@ class PaymentAPITests(APITestCase):
         url = '/api/payments/payments/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
 
     def test_get_payment_detail(self):
         """Test retrieving payment details"""
@@ -153,4 +154,4 @@ class PaymentAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         
         self.assertEqual(response.data['payment_method'], self.credit_card.id)
-        self.assertEqual(response.data['amount'], '99.99')
+        self.assertEqual(str(response.data['amount']), '99.99')

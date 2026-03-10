@@ -1,0 +1,5636 @@
+﻿d:\comf\alcom\myenv\Scripts\py
+thon.exe : Creating test 
+database for alias 
+'default'...
+At line:1 char:1
++ d:\comf\alcom\myenv\Scripts\
+python.exe 
+d:\comf\alcom\manage.py test 
+> ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo          : 
+    NotSpecified: (Creating   
+  test d...as 'default'...:   
+ String) [], RemoteExcepti    
+on
+    + FullyQualifiedErrorId : 
+    NativeCommandError
+ 
+
+CREATE TABLE 
+"django_migrations" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "app" 
+varchar(255) NOT NULL, "name" 
+varchar(255) NOT NULL, 
+"applied" datetime NOT NULL); 
+(params None)
+CREATE TABLE 
+"django_content_type" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "name" 
+varchar(100) NOT NULL, 
+"app_label" varchar(100) NOT 
+NULL, "model" varchar(100) 
+NOT NULL); (params None)
+CREATE UNIQUE INDEX "django_co
+ntent_type_app_label_model_76b
+d3d3b_uniq" ON 
+"django_content_type" 
+("app_label", "model"); 
+(params ())
+CREATE TABLE 
+"new__django_content_type" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"app_label" varchar(100) NOT 
+NULL, "model" varchar(100) 
+NOT NULL, "name" varchar(100) 
+NULL); (params None)
+INSERT INTO 
+"new__django_content_type" 
+("id", "app_label", "model", 
+"name") SELECT "id", 
+"app_label", "model", "name" 
+FROM "django_content_type"; 
+(params ())
+DROP TABLE 
+"django_content_type"; 
+(params ())
+ALTER TABLE 
+"new__django_content_type" 
+RENAME TO 
+"django_content_type"; 
+(params ())
+CREATE UNIQUE INDEX "django_co
+ntent_type_app_label_model_76b
+d3d3b_uniq" ON 
+"django_content_type" 
+("app_label", "model"); 
+(params ())
+ALTER TABLE 
+"django_content_type" DROP 
+COLUMN "name"; (params ())
+CREATE TABLE 
+"auth_permission" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "name" 
+varchar(50) NOT NULL, 
+"content_type_id" integer NOT 
+NULL REFERENCES 
+"django_content_type" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "codename" 
+varchar(100) NOT NULL); 
+(params None)
+CREATE TABLE "auth_group" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"name" varchar(80) NOT NULL 
+UNIQUE); (params None)
+CREATE TABLE 
+"auth_group_permissions" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"group_id" integer NOT NULL 
+REFERENCES "auth_group" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "permission_id" 
+integer NOT NULL REFERENCES 
+"auth_permission" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE UNIQUE INDEX "auth_perm
+ission_content_type_id_codenam
+e_01ab375a_uniq" ON 
+"auth_permission" 
+("content_type_id", 
+"codename"); (params None)
+CREATE INDEX "auth_permission_
+content_type_id_2f476e4b" ON 
+"auth_permission" 
+("content_type_id"); (params 
+None)
+CREATE UNIQUE INDEX "auth_grou
+p_permissions_group_id_permiss
+ion_id_0cd325b0_uniq" ON 
+"auth_group_permissions" 
+("group_id", 
+"permission_id"); (params 
+None)
+CREATE INDEX "auth_group_permi
+ssions_group_id_b120cbf9" ON 
+"auth_group_permissions" 
+("group_id"); (params None)
+CREATE INDEX "auth_group_permi
+ssions_permission_id_84c5c92e"
+ ON "auth_group_permissions" 
+("permission_id"); (params 
+None)
+CREATE TABLE 
+"new__auth_permission" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, 
+"content_type_id" integer NOT 
+NULL REFERENCES 
+"django_content_type" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "codename" 
+varchar(100) NOT NULL, "name" 
+varchar(255) NOT NULL); 
+(params None)
+INSERT INTO 
+"new__auth_permission" ("id", 
+"content_type_id", 
+"codename", "name") SELECT 
+"id", "content_type_id", 
+"codename", "name" FROM 
+"auth_permission"; (params ())
+DROP TABLE "auth_permission"; 
+(params ())
+ALTER TABLE 
+"new__auth_permission" RENAME 
+TO "auth_permission"; (params 
+())
+CREATE UNIQUE INDEX "auth_perm
+ission_content_type_id_codenam
+e_01ab375a_uniq" ON 
+"auth_permission" 
+("content_type_id", 
+"codename"); (params ())
+CREATE INDEX "auth_permission_
+content_type_id_2f476e4b" ON 
+"auth_permission" 
+("content_type_id"); (params 
+())
+CREATE TABLE 
+"new__auth_group" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "name" 
+varchar(150) NOT NULL 
+UNIQUE); (params None)
+INSERT INTO "new__auth_group" 
+("id", "name") SELECT "id", 
+"name" FROM "auth_group"; 
+(params ())
+DROP TABLE "auth_group"; 
+(params ())
+ALTER TABLE "new__auth_group" 
+RENAME TO "auth_group"; 
+(params ())
+CREATE TABLE "accounts_user" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"password" varchar(128) NOT 
+NULL, "last_login" datetime 
+NULL, "is_superuser" bool NOT 
+NULL, "username" varchar(150) 
+NOT NULL UNIQUE, "first_name" 
+varchar(150) NOT NULL, 
+"last_name" varchar(150) NOT 
+NULL, "email" varchar(254) 
+NOT NULL, "is_staff" bool NOT 
+NULL, "is_active" bool NOT 
+NULL, "date_joined" datetime 
+NOT NULL, "phone_number" 
+varchar(15) NULL); (params 
+None)
+CREATE TABLE 
+"accounts_user_groups" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "user_id" 
+bigint NOT NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "group_id" integer 
+NOT NULL REFERENCES 
+"auth_group" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE "accounts_user_us
+er_permissions" ("id" integer 
+NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "user_id" 
+bigint NOT NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "permission_id" 
+integer NOT NULL REFERENCES 
+"auth_permission" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"accounts_address" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, 
+"street_address" varchar(255) 
+NOT NULL, "city" varchar(100) 
+NOT NULL, "state_province" 
+varchar(100) NOT NULL, 
+"zip_code" varchar(20) NOT 
+NULL, "country" varchar(100) 
+NOT NULL, "is_shipping" bool 
+NOT NULL, "is_billing" bool 
+NOT NULL, "label" varchar(50) 
+NOT NULL, "user_id" bigint 
+NOT NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"accounts_userprofile" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "bio" text NOT 
+NULL, "date_of_birth" date 
+NULL, "user_id" bigint NOT 
+NULL UNIQUE REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"accounts_wishlist" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "created_at" 
+datetime NOT NULL, 
+"updated_at" datetime NOT 
+NULL, "user_id" bigint NOT 
+NULL UNIQUE REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE UNIQUE INDEX "accounts_
+user_groups_user_id_group_id_5
+9c0b32f_uniq" ON 
+"accounts_user_groups" 
+("user_id", "group_id"); 
+(params None)
+CREATE INDEX "accounts_user_gr
+oups_user_id_52b62117" ON 
+"accounts_user_groups" 
+("user_id"); (params None)
+CREATE INDEX "accounts_user_gr
+oups_group_id_bd11a704" ON 
+"accounts_user_groups" 
+("group_id"); (params None)
+CREATE UNIQUE INDEX "accounts_
+user_user_permissions_user_id_
+permission_id_2ab516c2_uniq" 
+ON "accounts_user_user_permiss
+ions" ("user_id", 
+"permission_id"); (params 
+None)
+CREATE INDEX "accounts_user_us
+er_permissions_user_id_e4f0a16
+1" ON "accounts_user_user_perm
+issions" ("user_id"); (params 
+None)
+CREATE INDEX "accounts_user_us
+er_permissions_permission_id_1
+13bb443" ON "accounts_user_use
+r_permissions" 
+("permission_id"); (params 
+None)
+CREATE INDEX "accounts_address
+_user_id_c8c74ddf" ON 
+"accounts_address" 
+("user_id"); (params None)
+CREATE TABLE 
+"account_emailaddress" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "email" 
+varchar(75) NOT NULL UNIQUE, 
+"verified" bool NOT NULL, 
+"primary" bool NOT NULL, 
+"user_id" bigint NOT NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"account_emailconfirmation" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"created" datetime NOT NULL, 
+"sent" datetime NULL, "key" 
+varchar(64) NOT NULL UNIQUE, 
+"email_address_id" integer 
+NOT NULL REFERENCES 
+"account_emailaddress" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE INDEX "account_emailadd
+ress_user_id_2c513194" ON 
+"account_emailaddress" 
+("user_id"); (params None)
+CREATE INDEX "account_emailcon
+firmation_email_address_id_5b7
+f8c58" ON 
+"account_emailconfirmation" 
+("email_address_id"); (params 
+None)
+CREATE TABLE 
+"new__account_emailaddress" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"verified" bool NOT NULL, 
+"primary" bool NOT NULL, 
+"user_id" bigint NOT NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "email" 
+varchar(254) NOT NULL 
+UNIQUE); (params None)
+INSERT INTO 
+"new__account_emailaddress" 
+("id", "verified", "primary", 
+"user_id", "email") SELECT 
+"id", "verified", "primary", 
+"user_id", "email" FROM 
+"account_emailaddress"; 
+(params ())
+DROP TABLE 
+"account_emailaddress"; 
+(params ())
+ALTER TABLE 
+"new__account_emailaddress" 
+RENAME TO 
+"account_emailaddress"; 
+(params ())
+CREATE INDEX "account_emailadd
+ress_user_id_2c513194" ON 
+"account_emailaddress" 
+("user_id"); (params ())
+CREATE UNIQUE INDEX "account_e
+mailaddress_user_id_email_987c
+8728_uniq" ON 
+"account_emailaddress" 
+("user_id", "email"); (params 
+())
+CREATE UNIQUE INDEX 
+"unique_verified_email" ON 
+"account_emailaddress" 
+("email") WHERE "verified"; 
+(params None)
+CREATE TABLE 
+"new__account_emailaddress" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"verified" bool NOT NULL, 
+"primary" bool NOT NULL, 
+"user_id" bigint NOT NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "email" 
+varchar(254) NOT NULL); 
+(params None)
+INSERT INTO 
+"new__account_emailaddress" 
+("id", "verified", "primary", 
+"user_id", "email") SELECT 
+"id", "verified", "primary", 
+"user_id", "email" FROM 
+"account_emailaddress"; 
+(params ())
+DROP TABLE 
+"account_emailaddress"; 
+(params ())
+ALTER TABLE 
+"new__account_emailaddress" 
+RENAME TO 
+"account_emailaddress"; 
+(params ())
+CREATE UNIQUE INDEX "account_e
+mailaddress_user_id_email_987c
+8728_uniq" ON 
+"account_emailaddress" 
+("user_id", "email"); (params 
+())
+CREATE UNIQUE INDEX 
+"unique_verified_email" ON 
+"account_emailaddress" 
+("email") WHERE "verified"; 
+(params ())
+CREATE INDEX "account_emailadd
+ress_user_id_2c513194" ON 
+"account_emailaddress" 
+("user_id"); (params ())
+CREATE INDEX 
+"account_emailaddress_upper" 
+ON "account_emailaddress" 
+((UPPER("email"))); (params 
+None)
+DROP INDEX 
+"account_emailaddress_upper"; 
+(params ())
+CREATE TABLE 
+"new__account_emailaddress" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"verified" bool NOT NULL, 
+"primary" bool NOT NULL, 
+"user_id" bigint NOT NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "email" 
+varchar(254) NOT NULL); 
+(params None)
+INSERT INTO 
+"new__account_emailaddress" 
+("id", "verified", "primary", 
+"user_id", "email") SELECT 
+"id", "verified", "primary", 
+"user_id", "email" FROM 
+"account_emailaddress"; 
+(params ())
+DROP TABLE 
+"account_emailaddress"; 
+(params ())
+ALTER TABLE 
+"new__account_emailaddress" 
+RENAME TO 
+"account_emailaddress"; 
+(params ())
+CREATE UNIQUE INDEX "account_e
+mailaddress_user_id_email_987c
+8728_uniq" ON 
+"account_emailaddress" 
+("user_id", "email"); (params 
+())
+CREATE UNIQUE INDEX 
+"unique_verified_email" ON 
+"account_emailaddress" 
+("email") WHERE "verified"; 
+(params ())
+CREATE INDEX "account_emailadd
+ress_user_id_2c513194" ON 
+"account_emailaddress" 
+("user_id"); (params ())
+CREATE INDEX "account_emailadd
+ress_email_03be32b2" ON 
+"account_emailaddress" 
+("email"); (params ())
+CREATE UNIQUE INDEX 
+"unique_primary_email" ON 
+"account_emailaddress" 
+("user_id", "primary") WHERE 
+"primary"; (params None)
+ALTER TABLE 
+"accounts_address" DROP 
+COLUMN "is_billing"; (params 
+())
+ALTER TABLE 
+"accounts_address" DROP 
+COLUMN "is_shipping"; (params 
+())
+ALTER TABLE 
+"accounts_address" DROP 
+COLUMN "state_province"; 
+(params ())
+ALTER TABLE 
+"accounts_address" DROP 
+COLUMN "zip_code"; (params ())
+CREATE TABLE 
+"new__accounts_address" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, 
+"street_address" varchar(255) 
+NOT NULL, "city" varchar(100) 
+NOT NULL, "country" 
+varchar(100) NOT NULL, 
+"label" varchar(50) NOT NULL, 
+"user_id" bigint NOT NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "address_type" 
+varchar(50) NOT NULL); 
+(params None)
+INSERT INTO 
+"new__accounts_address" 
+("id", "street_address", 
+"city", "country", "label", 
+"user_id", "address_type") 
+SELECT "id", 
+"street_address", "city", 
+"country", "label", 
+"user_id", 'shipping' FROM 
+"accounts_address"; (params 
+())
+DROP TABLE 
+"accounts_address"; (params 
+())
+ALTER TABLE 
+"new__accounts_address" 
+RENAME TO "accounts_address"; 
+(params ())
+CREATE INDEX "accounts_address
+_user_id_c8c74ddf" ON 
+"accounts_address" 
+("user_id"); (params ())
+CREATE TABLE 
+"new__accounts_address" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, 
+"street_address" varchar(255) 
+NOT NULL, "city" varchar(100) 
+NOT NULL, "country" 
+varchar(100) NOT NULL, 
+"label" varchar(50) NOT NULL, 
+"user_id" bigint NOT NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "address_type" 
+varchar(50) NOT NULL, "state" 
+varchar(100) NOT NULL); 
+(params None)
+INSERT INTO 
+"new__accounts_address" 
+("id", "street_address", 
+"city", "country", "label", 
+"user_id", "address_type", 
+"state") SELECT "id", 
+"street_address", "city", 
+"country", "label", 
+"user_id", "address_type", '' 
+FROM "accounts_address"; 
+(params ())
+DROP TABLE 
+"accounts_address"; (params 
+())
+ALTER TABLE 
+"new__accounts_address" 
+RENAME TO "accounts_address"; 
+(params ())
+CREATE INDEX "accounts_address
+_user_id_c8c74ddf" ON 
+"accounts_address" 
+("user_id"); (params ())
+CREATE TABLE 
+"new__accounts_userprofile" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"bio" text NOT NULL, 
+"date_of_birth" date NULL, 
+"user_id" bigint NOT NULL 
+UNIQUE REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "phone" varchar(20) 
+NOT NULL); (params None)
+INSERT INTO 
+"new__accounts_userprofile" 
+("id", "bio", 
+"date_of_birth", "user_id", 
+"phone") SELECT "id", "bio", 
+"date_of_birth", "user_id", 
+'' FROM 
+"accounts_userprofile"; 
+(params ())
+DROP TABLE 
+"accounts_userprofile"; 
+(params ())
+ALTER TABLE 
+"new__accounts_userprofile" 
+RENAME TO 
+"accounts_userprofile"; 
+(params ())
+CREATE TABLE 
+"django_admin_log" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "action_time" 
+datetime NOT NULL, 
+"object_id" text NULL, 
+"object_repr" varchar(200) 
+NOT NULL, "action_flag" 
+smallint unsigned NOT NULL 
+CHECK ("action_flag" >= 0), 
+"change_message" text NOT 
+NULL, "content_type_id" 
+integer NULL REFERENCES 
+"django_content_type" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "user_id" bigint 
+NOT NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE INDEX "django_admin_log
+_content_type_id_c4bce8eb" ON 
+"django_admin_log" 
+("content_type_id"); (params 
+None)
+CREATE INDEX "django_admin_log
+_user_id_c564eba6" ON 
+"django_admin_log" 
+("user_id"); (params None)
+CREATE TABLE 
+"new__django_admin_log" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "object_id" 
+text NULL, "object_repr" 
+varchar(200) NOT NULL, 
+"action_flag" smallint 
+unsigned NOT NULL CHECK 
+("action_flag" >= 0), 
+"change_message" text NOT 
+NULL, "content_type_id" 
+integer NULL REFERENCES 
+"django_content_type" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "user_id" bigint 
+NOT NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "action_time" 
+datetime NOT NULL); (params 
+None)
+INSERT INTO 
+"new__django_admin_log" 
+("id", "object_id", 
+"object_repr", "action_flag", 
+"change_message", 
+"content_type_id", "user_id", 
+"action_time") SELECT "id", 
+"object_id", "object_repr", 
+"action_flag", 
+"change_message", 
+"content_type_id", "user_id", 
+"action_time" FROM 
+"django_admin_log"; (params 
+())
+DROP TABLE 
+"django_admin_log"; (params 
+())
+ALTER TABLE 
+"new__django_admin_log" 
+RENAME TO "django_admin_log"; 
+(params ())
+CREATE INDEX "django_admin_log
+_content_type_id_c4bce8eb" ON 
+"django_admin_log" 
+("content_type_id"); (params 
+())
+CREATE INDEX "django_admin_log
+_user_id_c564eba6" ON 
+"django_admin_log" 
+("user_id"); (params ())
+CREATE TABLE "products_brand" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"name" varchar(100) NOT NULL 
+UNIQUE, "description" text 
+NOT NULL); (params None)
+CREATE TABLE "products_tag" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"name" varchar(50) NOT NULL 
+UNIQUE, "slug" varchar(50) 
+NOT NULL UNIQUE); (params 
+None)
+CREATE TABLE 
+"products_category" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "name" 
+varchar(100) NOT NULL UNIQUE, 
+"slug" varchar(100) NOT NULL 
+UNIQUE, "parent_id" bigint 
+NULL REFERENCES 
+"products_category" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"products_product" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "name" 
+varchar(255) NOT NULL, "slug" 
+varchar(255) NOT NULL UNIQUE, 
+"description" text NOT NULL, 
+"base_price" decimal NOT 
+NULL, "is_active" bool NOT 
+NULL, "created_at" datetime 
+NOT NULL, "updated_at" 
+datetime NOT NULL, "brand_id" 
+bigint NOT NULL REFERENCES 
+"products_brand" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "category_id" 
+bigint NOT NULL REFERENCES 
+"products_category" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"products_product_tags" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "product_id" 
+bigint NOT NULL REFERENCES 
+"products_product" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "tag_id" bigint NOT 
+NULL REFERENCES 
+"products_tag" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"products_productimage" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "image" 
+varchar(100) NOT NULL, 
+"alt_text" varchar(255) NOT 
+NULL, "is_main" bool NOT 
+NULL, "order" integer 
+unsigned NOT NULL CHECK 
+("order" >= 0), "product_id" 
+bigint NOT NULL REFERENCES 
+"products_product" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"products_productvariant" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"size" varchar(50) NULL, 
+"color" varchar(50) NULL, 
+"sku" varchar(100) NOT NULL 
+UNIQUE, 
+"variant_price_adjustment" 
+decimal NOT NULL, 
+"product_id" bigint NOT NULL 
+REFERENCES "products_product" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE INDEX "products_categor
+y_parent_id_3388f6c9" ON 
+"products_category" 
+("parent_id"); (params None)
+CREATE INDEX "products_product
+_brand_id_3e2e8fd1" ON 
+"products_product" 
+("brand_id"); (params None)
+CREATE INDEX "products_product
+_category_id_9b594869" ON 
+"products_product" 
+("category_id"); (params None)
+CREATE UNIQUE INDEX "products_
+product_tags_product_id_tag_id
+_a36d84e8_uniq" ON 
+"products_product_tags" 
+("product_id", "tag_id"); 
+(params None)
+CREATE INDEX "products_product
+_tags_product_id_f82cb4be" ON 
+"products_product_tags" 
+("product_id"); (params None)
+CREATE INDEX "products_product
+_tags_tag_id_f2d7d0b4" ON 
+"products_product_tags" 
+("tag_id"); (params None)
+CREATE INDEX "products_product
+image_product_id_e747596a" ON 
+"products_productimage" 
+("product_id"); (params None)
+CREATE UNIQUE INDEX "products_
+productvariant_product_id_size
+_color_120996eb_uniq" ON 
+"products_productvariant" 
+("product_id", "size", 
+"color"); (params None)
+CREATE INDEX "products_product
+variant_product_id_d9c22902" 
+ON "products_productvariant" 
+("product_id"); (params None)
+CREATE TABLE 
+"analytics_productview" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "session_id" 
+varchar(40) NULL, "timestamp" 
+datetime NOT NULL, "user_id" 
+bigint NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"analytics_searchquery" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "session_id" 
+varchar(40) NULL, "query" 
+varchar(255) NOT NULL, 
+"timestamp" datetime NOT 
+NULL, "results_count" integer 
+unsigned NOT NULL CHECK 
+("results_count" >= 0), 
+"user_id" bigint NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"analytics_useractivity" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"activity_type" varchar(100) 
+NOT NULL, "timestamp" 
+datetime NOT NULL, "details" 
+text NULL CHECK 
+((JSON_VALID("details") OR 
+"details" IS NULL)), 
+"user_id" bigint NOT NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE INDEX "analytics_produc
+tview_user_id_fa531902" ON 
+"analytics_productview" 
+("user_id"); (params None)
+CREATE INDEX "analytics_search
+query_user_id_71c3c452" ON 
+"analytics_searchquery" 
+("user_id"); (params None)
+CREATE INDEX "analytics_userac
+tivity_user_id_5018049a" ON 
+"analytics_useractivity" 
+("user_id"); (params None)
+CREATE TABLE 
+"analytics_salesreport" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "report_date" 
+date NOT NULL UNIQUE, 
+"total_revenue" decimal NOT 
+NULL, "total_orders" integer 
+unsigned NOT NULL CHECK 
+("total_orders" >= 0), 
+"total_customers" integer 
+unsigned NOT NULL CHECK 
+("total_customers" >= 0), 
+"average_order_value" decimal 
+NOT NULL, "products_sold" 
+integer unsigned NOT NULL 
+CHECK ("products_sold" >= 0), 
+"new_customers" integer 
+unsigned NOT NULL CHECK 
+("new_customers" >= 0)); 
+(params None)
+CREATE TABLE 
+"new__analytics_useractivity" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"activity_type" varchar(100) 
+NOT NULL, "timestamp" 
+datetime NOT NULL, "details" 
+text NULL CHECK 
+((JSON_VALID("details") OR 
+"details" IS NULL))); (params 
+None)
+INSERT INTO 
+"new__analytics_useractivity" 
+("id", "activity_type", 
+"timestamp", "details") 
+SELECT "id", "activity_type", 
+"timestamp", "details" FROM 
+"analytics_useractivity"; 
+(params ())
+DROP TABLE 
+"analytics_useractivity"; 
+(params ())
+ALTER TABLE 
+"new__analytics_useractivity" 
+RENAME TO 
+"analytics_useractivity"; 
+(params ())
+ALTER TABLE 
+"analytics_productview" DROP 
+COLUMN "timestamp"; (params 
+())
+CREATE TABLE 
+"new__analytics_productview" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"session_id" varchar(40) 
+NULL, "user_id" bigint NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "created_at" 
+datetime NOT NULL); (params 
+None)
+INSERT INTO 
+"new__analytics_productview" 
+("id", "session_id", 
+"user_id", "created_at") 
+SELECT "id", "session_id", 
+"user_id", '2026-03-10 
+18:30:09.451941' FROM 
+"analytics_productview"; 
+(params ())
+DROP TABLE 
+"analytics_productview"; 
+(params ())
+ALTER TABLE 
+"new__analytics_productview" 
+RENAME TO 
+"analytics_productview"; 
+(params ())
+CREATE INDEX "analytics_produc
+tview_user_id_fa531902" ON 
+"analytics_productview" 
+("user_id"); (params ())
+ALTER TABLE 
+"analytics_productview" ADD 
+COLUMN "product_id" bigint 
+NULL REFERENCES 
+"products_product" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED; (params None)
+CREATE TABLE 
+"new__analytics_productview" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"session_id" varchar(40) 
+NULL, "user_id" bigint NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "created_at" 
+datetime NOT NULL, 
+"product_id" bigint NULL 
+REFERENCES "products_product" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "updated_at" 
+datetime NOT NULL); (params 
+None)
+INSERT INTO 
+"new__analytics_productview" 
+("id", "session_id", 
+"user_id", "created_at", 
+"product_id", "updated_at") 
+SELECT "id", "session_id", 
+"user_id", "created_at", 
+"product_id", '2026-03-10 
+18:30:09.481087' FROM 
+"analytics_productview"; 
+(params ())
+DROP TABLE 
+"analytics_productview"; 
+(params ())
+ALTER TABLE 
+"new__analytics_productview" 
+RENAME TO 
+"analytics_productview"; 
+(params ())
+CREATE INDEX "analytics_produc
+tview_user_id_fa531902" ON 
+"analytics_productview" 
+("user_id"); (params ())
+CREATE INDEX "analytics_produc
+tview_product_id_17e7d3cb" ON 
+"analytics_productview" 
+("product_id"); (params ())
+CREATE TABLE 
+"new__analytics_productview" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"session_id" varchar(40) 
+NULL, "user_id" bigint NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "created_at" 
+datetime NOT NULL, 
+"product_id" bigint NULL 
+REFERENCES "products_product" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "updated_at" 
+datetime NOT NULL, 
+"view_duration" integer 
+unsigned NOT NULL CHECK 
+("view_duration" >= 0)); 
+(params None)
+INSERT INTO 
+"new__analytics_productview" 
+("id", "session_id", 
+"user_id", "created_at", 
+"product_id", "updated_at", 
+"view_duration") SELECT "id", 
+"session_id", "user_id", 
+"created_at", "product_id", 
+"updated_at", 0 FROM 
+"analytics_productview"; 
+(params ())
+DROP TABLE 
+"analytics_productview"; 
+(params ())
+ALTER TABLE 
+"new__analytics_productview" 
+RENAME TO 
+"analytics_productview"; 
+(params ())
+CREATE INDEX "analytics_produc
+tview_user_id_fa531902" ON 
+"analytics_productview" 
+("user_id"); (params ())
+CREATE INDEX "analytics_produc
+tview_product_id_17e7d3cb" ON 
+"analytics_productview" 
+("product_id"); (params ())
+CREATE TABLE 
+"analytics_pageview" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "page_url" 
+varchar(255) NOT NULL, 
+"page_title" varchar(255) NOT 
+NULL, "session_id" 
+varchar(40) NULL, 
+"ip_address" char(39) NULL, 
+"user_agent" text NOT NULL, 
+"created_at" datetime NOT 
+NULL, "updated_at" datetime 
+NOT NULL, "user_id" bigint 
+NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+DROP TABLE 
+"analytics_searchquery"; 
+(params ())
+DROP TABLE 
+"analytics_useractivity"; 
+(params ())
+CREATE INDEX "analytics_pagevi
+ew_user_id_3a451b40" ON 
+"analytics_pageview" 
+("user_id"); (params None)
+CREATE TABLE 
+"authtoken_token" ("key" 
+varchar(40) NOT NULL PRIMARY 
+KEY, "created" datetime NOT 
+NULL, "user_id" bigint NOT 
+NULL UNIQUE REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE "cart_coupon" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"code" varchar(50) NOT NULL 
+UNIQUE, "discount_percentage" 
+decimal NOT NULL, 
+"max_discount_amount" decimal 
+NULL, "is_active" bool NOT 
+NULL, "valid_from" datetime 
+NOT NULL, "valid_to" datetime 
+NOT NULL); (params None)
+CREATE TABLE "cart_discount" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"description" varchar(255) 
+NOT NULL, "discount_value" 
+decimal NOT NULL, 
+"is_percentage" bool NOT 
+NULL, "is_active" bool NOT 
+NULL); (params None)
+CREATE TABLE "cart_cart" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"session_id" varchar(40) 
+NULL, "created_at" datetime 
+NOT NULL, "updated_at" 
+datetime NOT NULL, "user_id" 
+bigint NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "coupon_id" bigint 
+NULL REFERENCES "cart_coupon" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "discount_id" 
+bigint NULL REFERENCES 
+"cart_discount" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE "cart_cartitem" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"quantity" integer unsigned 
+NOT NULL CHECK ("quantity" >= 
+0), "added_at" datetime NOT 
+NULL, "cart_id" bigint NOT 
+NULL REFERENCES "cart_cart" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE INDEX 
+"cart_cart_user_id_9b4220b9" 
+ON "cart_cart" ("user_id"); 
+(params None)
+CREATE INDEX "cart_cart_coupon
+_id_0e43a044" ON "cart_cart" 
+("coupon_id"); (params None)
+CREATE INDEX "cart_cart_discou
+nt_id_ef309c8c" ON 
+"cart_cart" ("discount_id"); 
+(params None)
+CREATE INDEX "cart_cartitem_ca
+rt_id_370ad265" ON 
+"cart_cartitem" ("cart_id"); 
+(params None)
+ALTER TABLE "cart_cartitem" 
+ADD COLUMN "product_id" 
+bigint NULL REFERENCES 
+"products_product" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED; (params None)
+CREATE INDEX "cart_cartitem_pr
+oduct_id_b24e265a" ON 
+"cart_cartitem" 
+("product_id"); (params None)
+CREATE TABLE 
+"new__cart_cartitem" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "quantity" 
+integer unsigned NOT NULL 
+CHECK ("quantity" >= 0), 
+"added_at" datetime NOT NULL, 
+"cart_id" bigint NOT NULL 
+REFERENCES "cart_cart" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "product_id" bigint 
+NOT NULL REFERENCES 
+"products_product" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+INSERT INTO 
+"new__cart_cartitem" ("id", 
+"quantity", "added_at", 
+"cart_id", "product_id") 
+SELECT "id", "quantity", 
+"added_at", "cart_id", 
+coalesce("product_id", 1) 
+FROM "cart_cartitem"; (params 
+())
+DROP TABLE "cart_cartitem"; 
+(params ())
+ALTER TABLE 
+"new__cart_cartitem" RENAME 
+TO "cart_cartitem"; (params 
+())
+CREATE INDEX "cart_cartitem_ca
+rt_id_370ad265" ON 
+"cart_cartitem" ("cart_id"); 
+(params ())
+CREATE INDEX "cart_cartitem_pr
+oduct_id_b24e265a" ON 
+"cart_cartitem" 
+("product_id"); (params ())
+CREATE TABLE 
+"orders_orderstatus" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "name" 
+varchar(50) NOT NULL UNIQUE, 
+"description" varchar(255) 
+NOT NULL); (params None)
+CREATE TABLE 
+"orders_shippingmethod" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "name" 
+varchar(100) NOT NULL, 
+"description" text NOT NULL, 
+"cost" decimal NOT NULL); 
+(params None)
+CREATE TABLE "orders_order" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"total_amount" decimal NOT 
+NULL, "created_at" datetime 
+NOT NULL, "updated_at" 
+datetime NOT NULL, 
+"tracking_number" 
+varchar(100) NULL, "user_id" 
+bigint NOT NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "status_id" bigint 
+NULL REFERENCES 
+"orders_orderstatus" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, 
+"shipping_method_id" bigint 
+NULL REFERENCES 
+"orders_shippingmethod" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"orders_orderitem" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "quantity" 
+integer unsigned NOT NULL 
+CHECK ("quantity" >= 0), 
+"price_at_purchase" decimal 
+NOT NULL, "order_id" bigint 
+NOT NULL REFERENCES 
+"orders_order" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE INDEX "orders_order_use
+r_id_e9b59eb1" ON 
+"orders_order" ("user_id"); 
+(params None)
+CREATE INDEX "orders_order_sta
+tus_id_d80abc38" ON 
+"orders_order" ("status_id"); 
+(params None)
+CREATE INDEX "orders_order_shi
+pping_method_id_428e13e2" ON 
+"orders_order" 
+("shipping_method_id"); 
+(params None)
+CREATE INDEX "orders_orderitem
+_order_id_fe61a34d" ON 
+"orders_orderitem" 
+("order_id"); (params None)
+CREATE TABLE 
+"new__orders_shippingmethod" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"name" varchar(100) NOT NULL, 
+"description" text NOT NULL, 
+"cost" decimal NOT NULL, 
+"is_active" bool NOT NULL); 
+(params None)
+INSERT INTO 
+"new__orders_shippingmethod" 
+("id", "name", "description", 
+"cost", "is_active") SELECT 
+"id", "name", "description", 
+"cost", 1 FROM 
+"orders_shippingmethod"; 
+(params ())
+DROP TABLE 
+"orders_shippingmethod"; 
+(params ())
+ALTER TABLE 
+"new__orders_shippingmethod" 
+RENAME TO 
+"orders_shippingmethod"; 
+(params ())
+CREATE TABLE 
+"payments_paymentmethod" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"name" varchar(100) NOT NULL 
+UNIQUE, "description" text 
+NOT NULL, "is_active" bool 
+NOT NULL); (params None)
+CREATE TABLE 
+"payments_payment" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "amount" 
+decimal NOT NULL, "status" 
+varchar(20) NOT NULL, 
+"timestamp" datetime NOT 
+NULL, "payment_method_id" 
+bigint NULL REFERENCES 
+"payments_paymentmethod" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"payments_refund" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "reason" text 
+NOT NULL, "amount" decimal 
+NOT NULL, "status" 
+varchar(50) NOT NULL, 
+"timestamp" datetime NOT 
+NULL, "processed_at" datetime 
+NULL, "payment_id" bigint NOT 
+NULL REFERENCES 
+"payments_payment" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"payments_transaction" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, 
+"transaction_id" varchar(100) 
+NOT NULL UNIQUE, "is_success" 
+bool NOT NULL, "amount" 
+decimal NOT NULL, "timestamp" 
+datetime NOT NULL, 
+"response_data" text NULL 
+CHECK 
+((JSON_VALID("response_data") 
+OR "response_data" IS NULL)), 
+"payment_id" bigint NOT NULL 
+REFERENCES "payments_payment" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE INDEX "payments_payment
+_payment_method_id_c909ff25" 
+ON "payments_payment" 
+("payment_method_id"); 
+(params None)
+CREATE INDEX "payments_refund_
+payment_id_a70693f7" ON 
+"payments_refund" 
+("payment_id"); (params None)
+CREATE INDEX "payments_transac
+tion_payment_id_2f6b2801" ON 
+"payments_transaction" 
+("payment_id"); (params None)
+ALTER TABLE 
+"payments_payment" ADD COLUMN 
+"order_id" bigint NULL 
+REFERENCES "orders_order" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED; (params None)
+CREATE TABLE 
+"new__payments_payment" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "amount" 
+decimal NOT NULL, "status" 
+varchar(20) NOT NULL, 
+"timestamp" datetime NOT 
+NULL, "payment_method_id" 
+bigint NULL REFERENCES 
+"payments_paymentmethod" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "order_id" bigint 
+NULL REFERENCES 
+"orders_order" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "currency" 
+varchar(10) NOT NULL); 
+(params None)
+INSERT INTO 
+"new__payments_payment" 
+("id", "amount", "status", 
+"timestamp", 
+"payment_method_id", 
+"order_id", "currency") 
+SELECT "id", "amount", 
+"status", "timestamp", 
+"payment_method_id", 
+"order_id", 'USD' FROM 
+"payments_payment"; (params 
+())
+DROP TABLE 
+"payments_payment"; (params 
+())
+ALTER TABLE 
+"new__payments_payment" 
+RENAME TO "payments_payment"; 
+(params ())
+CREATE INDEX "payments_payment
+_payment_method_id_c909ff25" 
+ON "payments_payment" 
+("payment_method_id"); 
+(params ())
+CREATE INDEX "payments_payment
+_order_id_22c479b7" ON 
+"payments_payment" 
+("order_id"); (params ())
+CREATE TABLE 
+"new__payments_payment" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "amount" 
+decimal NOT NULL, "status" 
+varchar(20) NOT NULL, 
+"timestamp" datetime NOT 
+NULL, "payment_method_id" 
+bigint NULL REFERENCES 
+"payments_paymentmethod" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "order_id" bigint 
+NULL REFERENCES 
+"orders_order" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "currency" 
+varchar(10) NOT NULL); 
+(params None)
+INSERT INTO 
+"new__payments_payment" 
+("id", "amount", "status", 
+"timestamp", 
+"payment_method_id", 
+"order_id", "currency") 
+SELECT "id", "amount", 
+"status", "timestamp", 
+"payment_method_id", 
+"order_id", "currency" FROM 
+"payments_payment"; (params 
+())
+DROP TABLE 
+"payments_payment"; (params 
+())
+ALTER TABLE 
+"new__payments_payment" 
+RENAME TO "payments_payment"; 
+(params ())
+CREATE INDEX "payments_payment
+_payment_method_id_c909ff25" 
+ON "payments_payment" 
+("payment_method_id"); 
+(params ())
+CREATE INDEX "payments_payment
+_order_id_22c479b7" ON 
+"payments_payment" 
+("order_id"); (params ())
+CREATE TABLE "reviews_rating" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"rating" integer unsigned NOT 
+NULL CHECK ("rating" >= 0), 
+"timestamp" datetime NOT 
+NULL, "product_id" bigint NOT 
+NULL REFERENCES 
+"products_product" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "user_id" bigint 
+NOT NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE "reviews_review" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"title" varchar(200) NOT 
+NULL, "comment" text NOT 
+NULL, "created_at" datetime 
+NOT NULL, "updated_at" 
+datetime NOT NULL, 
+"is_approved" bool NOT NULL, 
+"rating_id" bigint NOT NULL 
+UNIQUE REFERENCES 
+"reviews_rating" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"reviews_reviewimage" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "image" 
+varchar(100) NOT NULL, 
+"caption" varchar(255) NOT 
+NULL, "review_id" bigint NOT 
+NULL REFERENCES 
+"reviews_review" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE UNIQUE INDEX "reviews_r
+ating_product_id_user_id_572e3
+cb4_uniq" ON "reviews_rating" 
+("product_id", "user_id"); 
+(params None)
+CREATE INDEX "reviews_rating_p
+roduct_id_57a14612" ON 
+"reviews_rating" 
+("product_id"); (params None)
+CREATE INDEX "reviews_rating_u
+ser_id_17595427" ON 
+"reviews_rating" ("user_id"); 
+(params None)
+CREATE INDEX "reviews_reviewim
+age_review_id_57e63bb2" ON 
+"reviews_reviewimage" 
+("review_id"); (params None)
+CREATE TABLE "django_session" 
+("session_key" varchar(40) 
+NOT NULL PRIMARY KEY, 
+"session_data" text NOT NULL, 
+"expire_date" datetime NOT 
+NULL); (params None)
+CREATE INDEX "django_session_e
+xpire_date_a5c62663" ON 
+"django_session" 
+("expire_date"); (params None)
+CREATE TABLE "django_site" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"domain" varchar(100) NOT 
+NULL, "name" varchar(50) NOT 
+NULL); (params None)
+CREATE TABLE 
+"new__django_site" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "name" 
+varchar(50) NOT NULL, 
+"domain" varchar(100) NOT 
+NULL UNIQUE); (params None)
+INSERT INTO 
+"new__django_site" ("id", 
+"name", "domain") SELECT 
+"id", "name", "domain" FROM 
+"django_site"; (params ())
+DROP TABLE "django_site"; 
+(params ())
+ALTER TABLE 
+"new__django_site" RENAME TO 
+"django_site"; (params ())
+CREATE TABLE 
+"socialaccount_socialaccount" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"provider" varchar(30) NOT 
+NULL, "uid" varchar(191) NOT 
+NULL, "last_login" datetime 
+NOT NULL, "date_joined" 
+datetime NOT NULL, 
+"extra_data" text NOT NULL, 
+"user_id" bigint NOT NULL 
+REFERENCES "accounts_user" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"socialaccount_socialapp" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"provider" varchar(30) NOT 
+NULL, "name" varchar(40) NOT 
+NULL, "client_id" 
+varchar(100) NOT NULL, 
+"secret" varchar(100) NOT 
+NULL, "key" varchar(100) NOT 
+NULL); (params None)
+CREATE TABLE "socialaccount_so
+cialapp_sites" ("id" integer 
+NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "socialapp_id" 
+integer NOT NULL REFERENCES 
+"socialaccount_socialapp" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "site_id" integer 
+NOT NULL REFERENCES 
+"django_site" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE TABLE 
+"socialaccount_socialtoken" 
+("id" integer NOT NULL 
+PRIMARY KEY AUTOINCREMENT, 
+"token" text NOT NULL, 
+"token_secret" text NOT NULL, 
+"expires_at" datetime NULL, 
+"account_id" integer NOT NULL 
+REFERENCES 
+"socialaccount_socialaccount" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "app_id" integer 
+NOT NULL REFERENCES 
+"socialaccount_socialapp" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+CREATE UNIQUE INDEX "socialacc
+ount_socialtoken_app_id_accoun
+t_id_fca4e0ac_uniq" ON 
+"socialaccount_socialtoken" 
+("app_id", "account_id"); 
+(params ())
+CREATE UNIQUE INDEX "socialacc
+ount_socialaccount_provider_ui
+d_fc810c6e_uniq" ON 
+"socialaccount_socialaccount" 
+("provider", "uid"); (params 
+())
+CREATE INDEX "socialaccount_so
+cialaccount_user_id_8146e70c" 
+ON 
+"socialaccount_socialaccount" 
+("user_id"); (params None)
+CREATE UNIQUE INDEX "socialacc
+ount_socialapp_sites_socialapp
+_id_site_id_71a9a768_uniq" ON 
+"socialaccount_socialapp_sites
+" ("socialapp_id", 
+"site_id"); (params None)
+CREATE INDEX "socialaccount_so
+cialapp_sites_socialapp_id_97f
+b6e7d" ON "socialaccount_socia
+lapp_sites" ("socialapp_id"); 
+(params None)
+CREATE INDEX "socialaccount_so
+cialapp_sites_site_id_2579dee5
+" ON "socialaccount_socialapp_
+sites" ("site_id"); (params 
+None)
+CREATE INDEX "socialaccount_so
+cialtoken_account_id_951f210e"
+ ON 
+"socialaccount_socialtoken" 
+("account_id"); (params None)
+CREATE INDEX "socialaccount_so
+cialtoken_app_id_636a42d7" ON 
+"socialaccount_socialtoken" 
+("app_id"); (params None)
+CREATE TABLE "new__socialaccou
+nt_socialapp" ("id" integer 
+NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "provider" 
+varchar(30) NOT NULL, "name" 
+varchar(40) NOT NULL, 
+"secret" varchar(100) NOT 
+NULL, "key" varchar(100) NOT 
+NULL, "client_id" 
+varchar(191) NOT NULL); 
+(params None)
+INSERT INTO "new__socialaccoun
+t_socialapp" ("id", 
+"provider", "name", "secret", 
+"key", "client_id") SELECT 
+"id", "provider", "name", 
+"secret", "key", "client_id" 
+FROM 
+"socialaccount_socialapp"; 
+(params ())
+DROP TABLE 
+"socialaccount_socialapp"; 
+(params ())
+ALTER TABLE "new__socialaccoun
+t_socialapp" RENAME TO 
+"socialaccount_socialapp"; 
+(params ())
+CREATE TABLE "new__socialaccou
+nt_socialapp" ("id" integer 
+NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "provider" 
+varchar(30) NOT NULL, "name" 
+varchar(40) NOT NULL, 
+"client_id" varchar(191) NOT 
+NULL, "secret" varchar(100) 
+NOT NULL, "key" varchar(191) 
+NOT NULL); (params None)
+INSERT INTO "new__socialaccoun
+t_socialapp" ("id", 
+"provider", "name", 
+"client_id", "secret", "key") 
+SELECT "id", "provider", 
+"name", "client_id", 
+"secret", "key" FROM 
+"socialaccount_socialapp"; 
+(params ())
+DROP TABLE 
+"socialaccount_socialapp"; 
+(params ())
+ALTER TABLE "new__socialaccoun
+t_socialapp" RENAME TO 
+"socialaccount_socialapp"; 
+(params ())
+CREATE TABLE "new__socialaccou
+nt_socialapp" ("id" integer 
+NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "provider" 
+varchar(30) NOT NULL, "name" 
+varchar(40) NOT NULL, 
+"client_id" varchar(191) NOT 
+NULL, "key" varchar(191) NOT 
+NULL, "secret" varchar(191) 
+NOT NULL); (params None)
+INSERT INTO "new__socialaccoun
+t_socialapp" ("id", 
+"provider", "name", 
+"client_id", "key", "secret") 
+SELECT "id", "provider", 
+"name", "client_id", "key", 
+"secret" FROM 
+"socialaccount_socialapp"; 
+(params ())
+DROP TABLE 
+"socialaccount_socialapp"; 
+(params ())
+ALTER TABLE "new__socialaccoun
+t_socialapp" RENAME TO 
+"socialaccount_socialapp"; 
+(params ())
+CREATE TABLE "new__socialaccou
+nt_socialapp" ("id" integer 
+NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "provider" 
+varchar(30) NOT NULL, "name" 
+varchar(40) NOT NULL, 
+"client_id" varchar(191) NOT 
+NULL, "secret" varchar(191) 
+NOT NULL, "key" varchar(191) 
+NOT NULL, "provider_id" 
+varchar(200) NOT NULL); 
+(params None)
+INSERT INTO "new__socialaccoun
+t_socialapp" ("id", 
+"provider", "name", 
+"client_id", "secret", "key", 
+"provider_id") SELECT "id", 
+"provider", "name", 
+"client_id", "secret", "key", 
+'' FROM 
+"socialaccount_socialapp"; 
+(params ())
+DROP TABLE 
+"socialaccount_socialapp"; 
+(params ())
+ALTER TABLE "new__socialaccoun
+t_socialapp" RENAME TO 
+"socialaccount_socialapp"; 
+(params ())
+CREATE TABLE "new__socialaccou
+nt_socialapp" ("id" integer 
+NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "provider" 
+varchar(30) NOT NULL, "name" 
+varchar(40) NOT NULL, 
+"client_id" varchar(191) NOT 
+NULL, "secret" varchar(191) 
+NOT NULL, "key" varchar(191) 
+NOT NULL, "provider_id" 
+varchar(200) NOT NULL, 
+"settings" text NOT NULL 
+CHECK 
+((JSON_VALID("settings") OR 
+"settings" IS NULL))); 
+(params None)
+INSERT INTO "new__socialaccoun
+t_socialapp" ("id", 
+"provider", "name", 
+"client_id", "secret", "key", 
+"provider_id", "settings") 
+SELECT "id", "provider", 
+"name", "client_id", 
+"secret", "key", 
+"provider_id", '{}' FROM 
+"socialaccount_socialapp"; 
+(params ())
+DROP TABLE 
+"socialaccount_socialapp"; 
+(params ())
+ALTER TABLE "new__socialaccoun
+t_socialapp" RENAME TO 
+"socialaccount_socialapp"; 
+(params ())
+CREATE TABLE "new__socialaccou
+nt_socialaccount" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "uid" 
+varchar(191) NOT NULL, 
+"last_login" datetime NOT 
+NULL, "date_joined" datetime 
+NOT NULL, "extra_data" text 
+NOT NULL, "user_id" bigint 
+NOT NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "provider" 
+varchar(200) NOT NULL); 
+(params None)
+INSERT INTO "new__socialaccoun
+t_socialaccount" ("id", 
+"uid", "last_login", 
+"date_joined", "extra_data", 
+"user_id", "provider") SELECT 
+"id", "uid", "last_login", 
+"date_joined", "extra_data", 
+"user_id", "provider" FROM "so
+cialaccount_socialaccount"; 
+(params ())
+DROP TABLE "socialaccount_soci
+alaccount"; (params ())
+ALTER TABLE "new__socialaccoun
+t_socialaccount" RENAME TO "so
+cialaccount_socialaccount"; 
+(params ())
+CREATE UNIQUE INDEX "socialacc
+ount_socialaccount_provider_ui
+d_fc810c6e_uniq" ON 
+"socialaccount_socialaccount" 
+("provider", "uid"); (params 
+())
+CREATE INDEX "socialaccount_so
+cialaccount_user_id_8146e70c" 
+ON 
+"socialaccount_socialaccount" 
+("user_id"); (params ())
+CREATE TABLE "new__socialaccou
+nt_socialtoken" ("id" integer 
+NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "token" text 
+NOT NULL, "token_secret" text 
+NOT NULL, "expires_at" 
+datetime NULL, "account_id" 
+integer NOT NULL REFERENCES 
+"socialaccount_socialaccount" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED, "app_id" integer 
+NULL REFERENCES 
+"socialaccount_socialapp" 
+("id") DEFERRABLE INITIALLY 
+DEFERRED); (params None)
+INSERT INTO "new__socialaccoun
+t_socialtoken" ("id", 
+"token", "token_secret", 
+"expires_at", "account_id", 
+"app_id") SELECT "id", 
+"token", "token_secret", 
+"expires_at", "account_id", 
+"app_id" FROM 
+"socialaccount_socialtoken"; 
+(params ())
+DROP TABLE 
+"socialaccount_socialtoken"; 
+(params ())
+ALTER TABLE "new__socialaccoun
+t_socialtoken" RENAME TO 
+"socialaccount_socialtoken"; 
+(params ())
+CREATE UNIQUE INDEX "socialacc
+ount_socialtoken_app_id_accoun
+t_id_fca4e0ac_uniq" ON 
+"socialaccount_socialtoken" 
+("app_id", "account_id"); 
+(params ())
+CREATE INDEX "socialaccount_so
+cialtoken_account_id_951f210e"
+ ON 
+"socialaccount_socialtoken" 
+("account_id"); (params ())
+CREATE INDEX "socialaccount_so
+cialtoken_app_id_636a42d7" ON 
+"socialaccount_socialtoken" 
+("app_id"); (params ())
+CREATE TABLE "new__socialaccou
+nt_socialaccount" ("id" 
+integer NOT NULL PRIMARY KEY 
+AUTOINCREMENT, "provider" 
+varchar(200) NOT NULL, "uid" 
+varchar(191) NOT NULL, 
+"last_login" datetime NOT 
+NULL, "date_joined" datetime 
+NOT NULL, "user_id" bigint 
+NOT NULL REFERENCES 
+"accounts_user" ("id") 
+DEFERRABLE INITIALLY 
+DEFERRED, "extra_data" text 
+NOT NULL CHECK 
+((JSON_VALID("extra_data") OR 
+"extra_data" IS NULL))); 
+(params None)
+INSERT INTO "new__socialaccoun
+t_socialaccount" ("id", 
+"provider", "uid", 
+"last_login", "date_joined", 
+"user_id", "extra_data") 
+SELECT "id", "provider", 
+"uid", "last_login", 
+"date_joined", "user_id", 
+"extra_data" FROM "socialaccou
+nt_socialaccount"; (params ())
+DROP TABLE "socialaccount_soci
+alaccount"; (params ())
+ALTER TABLE "new__socialaccoun
+t_socialaccount" RENAME TO "so
+cialaccount_socialaccount"; 
+(params ())
+CREATE UNIQUE INDEX "socialacc
+ount_socialaccount_provider_ui
+d_fc810c6e_uniq" ON 
+"socialaccount_socialaccount" 
+("provider", "uid"); (params 
+())
+CREATE INDEX "socialaccount_so
+cialaccount_user_id_8146e70c" 
+ON 
+"socialaccount_socialaccount" 
+("user_id"); (params ())
+D:\comf\alcom\myenv\Lib\site-p
+ackages\dj_rest_auth\registrat
+ion\serializers.py:228: 
+UserWarning: app_settings.USER
+NAME_REQUIRED is deprecated, 
+use: app_settings.SIGNUP_FIELD
+S['username']['required']
+  required=allauth_account_set
+tings.USERNAME_REQUIRED,
+D:\comf\alcom\myenv\Lib\site-p
+ackages\dj_rest_auth\registrat
+ion\serializers.py:230: 
+UserWarning: 
+app_settings.EMAIL_REQUIRED 
+is deprecated, use: app_settin
+gs.SIGNUP_FIELDS['email']['req
+uired']
+  email = serializers.EmailFie
+ld(required=allauth_account_se
+ttings.EMAIL_REQUIRED)
+D:\comf\alcom\myenv\Lib\site-p
+ackages\dj_rest_auth\registrat
+ion\serializers.py:288: 
+UserWarning: 
+app_settings.EMAIL_REQUIRED 
+is deprecated, use: app_settin
+gs.SIGNUP_FIELDS['email']['req
+uired']
+  email = serializers.EmailFie
+ld(required=allauth_account_se
+ttings.EMAIL_REQUIRED)
+.EED:\comf\alcom\myenv\Lib\sit
+e-packages\rest_framework\pagi
+nation.py:207: 
+UnorderedObjectListWarning: 
+Pagination may yield 
+inconsistent results with an 
+unordered object_list: <class 
+'accounts.models.User'> 
+QuerySet.
+  paginator = self.django_pagi
+nator_class(queryset, 
+page_size)
+.Unauthorized: 
+/api/accounts/users/
+.D:\comf\alcom\myenv\Lib\site-
+packages\dj_rest_auth\serializ
+ers.py:62: UserWarning: app_se
+ttings.AUTHENTICATION_METHOD 
+is deprecated, use: 
+app_settings.LOGIN_METHODS
+  if allauth_account_settings.
+AUTHENTICATION_METHOD == allau
+th_account_settings.Authentica
+tionMethod.EMAIL:
+D:\comf\alcom\myenv\Lib\site-p
+ackages\dj_rest_auth\serialize
+rs.py:66: UserWarning: app_set
+tings.AUTHENTICATION_METHOD 
+is deprecated, use: 
+app_settings.LOGIN_METHODS
+  if allauth_account_settings.
+AUTHENTICATION_METHOD == allau
+th_account_settings.Authentica
+tionMethod.USERNAME:
+.Exception while resolving 
+variable 'code' in template 'a
+ccount/email/email_confirmatio
+n_signup_message.txt'.
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\templat
+e\base.py", line 891, in 
+_resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\templat
+e\context.py", line 88, in 
+__getitem__
+    raise KeyError(key)
+KeyError: 'code'
+
+During handling of the above 
+exception, another exception 
+occurred:
+
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\templat
+e\base.py", line 897, in 
+_resolve_lookup
+    if isinstance(current, 
+BaseContext) and getattr(
+                              
+              ~~~~~~~^
+        type(current), bit
+        ^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+AttributeError: type object 
+'RequestContext' has no 
+attribute 'code'
+
+During handling of the above 
+exception, another exception 
+occurred:
+
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\templat
+e\base.py", line 907, in 
+_resolve_lookup
+    current = 
+current[int(bit)]
+                      ~~~^^^^^
+ValueError: invalid literal 
+for int() with base 10: 'code'
+
+During handling of the above 
+exception, another exception 
+occurred:
+
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\templat
+e\base.py", line 914, in 
+_resolve_lookup
+    raise 
+VariableDoesNotExist(
+    
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+    )  # missing attribute
+    ^
+django.template.base.VariableD
+oesNotExist: Failed lookup 
+for key [code] in [{'True': 
+True, 'False': False, 'None': 
+None}, {'csrf_token': 
+<SimpleLazyObject: <function 
+csrf.<locals>._get_val at 
+0x0000025D4974ACA0>>, 
+'request': <WSGIRequest: POST 
+'/api/auth/registration/'>, 
+'user': <django.contrib.auth.m
+odels.AnonymousUser object at 
+0x0000025D49859130>, 'perms': 
+PermWrapper(<django.contrib.au
+th.models.AnonymousUser 
+object at 
+0x0000025D49859130>), 
+'messages': <FallbackStorage: 
+request=<WSGIRequest: POST 
+'/api/auth/registration/'>>, 
+'DEFAULT_MESSAGE_LEVELS': 
+{'DEBUG': 10, 'INFO': 20, 
+'SUCCESS': 25, 'WARNING': 30, 
+'ERROR': 40}, 'MEDIA_URL': 
+'/media/'}, {}, {'request': 
+<WSGIRequest: POST 
+'/api/auth/registration/'>, 
+'email': 
+'newuser@example.com', 
+'current_site': <Site: 
+example.com>, 'user': <User: 
+newuser@example.com>, 'key': '
+MQ:1w01qV:1G2p97fBWiSxC3PUdAsN
+B9bAGgda6DgoGZdlj3wGz8c', 
+'activate_url': 'http://testse
+rver/api/auth/registration/acc
+ount-confirm-email/MQ:1w01qV:1
+G2p97fBWiSxC3PUdAsNB9bAGgda6Dg
+oGZdlj3wGz8c/'}, {}, 
+{'block': <Block Node: 
+content. Contents: [<django.te
+mplate.defaulttags.AutoEscapeC
+ontrolNode object at 
+0x0000025D496AD1D0>]>, 
+'user_display': 'newuser'}]
+...FFEEEENot Found: 
+/api/analytics/page-views/
+FNot Found: 
+/api/analytics/page-views/
+FNot Found: 
+/api/analytics/page-views/
+FNot Found: 
+/api/analytics/page-views/
+FF.FNot Found: 
+/api/analytics/product-views/
+FNot Found: 
+/api/analytics/product-views/
+FNot Found: 
+/api/analytics/product-views/
+FE..Not Found: 
+/api/analytics/sales-reports/
+FENot Found: /api/analytics/sa
+les-reports/1/
+FNot Found: 
+/api/analytics/sales-reports/
+FNot Found: 
+/api/analytics/sales-reports/
+F.EEInternal Server Error: 
+/api/cart/cart-items/
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT 
+NULL constraint failed: 
+cart_cartitem.product_id
+
+The above exception was the 
+direct cause of the following 
+exception:
+
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\exception.py", line 
+55, in inner
+    response = 
+get_response(request)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\base.py", line 197, in 
+_get_response
+    response = 
+wrapped_callback(request, 
+*callback_args, 
+**callback_kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\views\d
+ecorators\csrf.py", line 65, 
+in _view_wrapper
+    return view_func(request, 
+*args, **kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\viewsets.py", line 125, in 
+view
+    return 
+self.dispatch(request, *args, 
+**kwargs)
+           ~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 515, in 
+dispatch
+    response = 
+self.handle_exception(exc)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 475, in 
+handle_exception
+    self.raise_uncaught_except
+ion(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 486, in 
+raise_uncaught_exception
+    raise exc
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 512, in 
+dispatch
+    response = 
+handler(request, *args, 
+**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\mixins.py", line 19, in 
+create
+    self.perform_create(serial
+izer)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^
+^^^^^
+  File "d:\comf\alcom\cart\vie
+ws.py", line 82, in 
+perform_create
+    serializer.save(cart=cart)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\serializers.py", line 210, 
+in save
+    self.instance = 
+self.create(validated_data)
+                    
+~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\serializers.py", line 991, 
+in create
+    instance = ModelClass._def
+ault_manager.create(**validate
+d_data)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 665, in 
+create
+    
+obj.save(force_insert=True, 
+using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        
+update_fields=update_fields,
+        
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1008, in 
+save_base
+    updated = 
+self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1169, in 
+_save_table
+    results = self._do_insert(
+        cls._base_manager, 
+using, fields, 
+returning_fields, raw
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1210, in 
+_do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 1873, in 
+_insert
+    return query.get_compiler(
+using=using).execute_sql(retur
+ning_fields)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\sql\compiler.py", line 
+1882, in execute_sql
+    cursor.execute(sql, 
+params)
+    
+~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 79, in 
+execute
+    return 
+self._execute_with_wrappers(
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, 
+many=False, 
+executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 92, in 
+_execute_with_wrappers
+    return executor(sql, 
+params, many, context)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 100, in 
+_execute
+    with 
+self.db.wrap_database_errors:
+         
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\util
+s.py", line 91, in __exit__
+    raise dj_exc_value.with_tr
+aceback(traceback) from 
+exc_value
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError
+: NOT NULL constraint failed: 
+cart_cartitem.product_id
+EInternal Server Error: 
+/api/cart/cart-items/
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT 
+NULL constraint failed: 
+cart_cartitem.product_id
+
+The above exception was the 
+direct cause of the following 
+exception:
+
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\exception.py", line 
+55, in inner
+    response = 
+get_response(request)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\base.py", line 197, in 
+_get_response
+    response = 
+wrapped_callback(request, 
+*callback_args, 
+**callback_kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\views\d
+ecorators\csrf.py", line 65, 
+in _view_wrapper
+    return view_func(request, 
+*args, **kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\viewsets.py", line 125, in 
+view
+    return 
+self.dispatch(request, *args, 
+**kwargs)
+           ~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 515, in 
+dispatch
+    response = 
+self.handle_exception(exc)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 475, in 
+handle_exception
+    self.raise_uncaught_except
+ion(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 486, in 
+raise_uncaught_exception
+    raise exc
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 512, in 
+dispatch
+    response = 
+handler(request, *args, 
+**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\mixins.py", line 19, in 
+create
+    self.perform_create(serial
+izer)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^
+^^^^^
+  File "d:\comf\alcom\cart\vie
+ws.py", line 82, in 
+perform_create
+    serializer.save(cart=cart)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\serializers.py", line 210, 
+in save
+    self.instance = 
+self.create(validated_data)
+                    
+~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\serializers.py", line 991, 
+in create
+    instance = ModelClass._def
+ault_manager.create(**validate
+d_data)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 665, in 
+create
+    
+obj.save(force_insert=True, 
+using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        
+update_fields=update_fields,
+        
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1008, in 
+save_base
+    updated = 
+self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1169, in 
+_save_table
+    results = self._do_insert(
+        cls._base_manager, 
+using, fields, 
+returning_fields, raw
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1210, in 
+_do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 1873, in 
+_insert
+    return query.get_compiler(
+using=using).execute_sql(retur
+ning_fields)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\sql\compiler.py", line 
+1882, in execute_sql
+    cursor.execute(sql, 
+params)
+    
+~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 79, in 
+execute
+    return 
+self._execute_with_wrappers(
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, 
+many=False, 
+executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 92, in 
+_execute_with_wrappers
+    return executor(sql, 
+params, many, context)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 100, in 
+_execute
+    with 
+self.db.wrap_database_errors:
+         
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\util
+s.py", line 91, in __exit__
+    raise dj_exc_value.with_tr
+aceback(traceback) from 
+exc_value
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError
+: NOT NULL constraint failed: 
+cart_cartitem.product_id
+ED:\comf\alcom\myenv\Lib\site-
+packages\rest_framework\pagina
+tion.py:207: 
+UnorderedObjectListWarning: 
+Pagination may yield 
+inconsistent results with an 
+unordered object_list: <class 
+'cart.models.Cart'> QuerySet.
+  paginator = self.django_pagi
+nator_class(queryset, 
+page_size)
+FEE.....Method Not Allowed: 
+/api/cart/coupons/apply/
+FMethod Not Allowed: 
+/api/cart/coupons/apply/
+F..Bad Request: 
+/api/orders/orders/
+FFD:\comf\alcom\myenv\Lib\site
+-packages\rest_framework\pagin
+ation.py:207: 
+UnorderedObjectListWarning: 
+Pagination may yield 
+inconsistent results with an 
+unordered object_list: <class 
+'orders.models.Order'> 
+QuerySet.
+  paginator = self.django_pagi
+nator_class(queryset, 
+page_size)
+F..Internal Server Error: 
+/api/payments/payments/
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\exception.py", line 
+55, in inner
+    response = 
+get_response(request)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\base.py", line 197, in 
+_get_response
+    response = 
+wrapped_callback(request, 
+*callback_args, 
+**callback_kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\views\d
+ecorators\csrf.py", line 65, 
+in _view_wrapper
+    return view_func(request, 
+*args, **kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\viewsets.py", line 125, in 
+view
+    return 
+self.dispatch(request, *args, 
+**kwargs)
+           ~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 515, in 
+dispatch
+    response = 
+self.handle_exception(exc)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 475, in 
+handle_exception
+    self.raise_uncaught_except
+ion(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 486, in 
+raise_uncaught_exception
+    raise exc
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 512, in 
+dispatch
+    response = 
+handler(request, *args, 
+**kwargs)
+  File "d:\comf\alcom\payments
+\views.py", line 28, in create
+    order = serializer.validat
+ed_data['order']
+            ~~~~~~~~~~~~~~~~~~
+~~~~~~~^^^^^^^^^
+KeyError: 'order'
+EInternal Server Error: 
+/api/payments/payments/
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\exception.py", line 
+55, in inner
+    response = 
+get_response(request)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\base.py", line 197, in 
+_get_response
+    response = 
+wrapped_callback(request, 
+*callback_args, 
+**callback_kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\views\d
+ecorators\csrf.py", line 65, 
+in _view_wrapper
+    return view_func(request, 
+*args, **kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\viewsets.py", line 125, in 
+view
+    return 
+self.dispatch(request, *args, 
+**kwargs)
+           ~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 515, in 
+dispatch
+    response = 
+self.handle_exception(exc)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 475, in 
+handle_exception
+    self.raise_uncaught_except
+ion(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 486, in 
+raise_uncaught_exception
+    raise exc
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 512, in 
+dispatch
+    response = 
+handler(request, *args, 
+**kwargs)
+  File "d:\comf\alcom\payments
+\views.py", line 28, in create
+    order = serializer.validat
+ed_data['order']
+            ~~~~~~~~~~~~~~~~~~
+~~~~~~~^^^^^^^^^
+KeyError: 'order'
+E.D:\comf\alcom\myenv\Lib\site
+-packages\rest_framework\pagin
+ation.py:207: 
+UnorderedObjectListWarning: 
+Pagination may yield 
+inconsistent results with an 
+unordered object_list: <class 
+'payments.models.PaymentMethod
+'> QuerySet.
+  paginator = self.django_pagi
+nator_class(queryset, 
+page_size)
+FD:\comf\alcom\myenv\Lib\site-
+packages\rest_framework\pagina
+tion.py:207: 
+UnorderedObjectListWarning: 
+Pagination may yield 
+inconsistent results with an 
+unordered object_list: <class 
+'payments.models.Payment'> 
+QuerySet.
+  paginator = self.django_pagi
+nator_class(queryset, 
+page_size)
+F....Not Found: 
+/api/products/categories/1/
+FF.EENot Found: 
+/api/products/products/1/
+FFFFF....Not Found: /api/revie
+ws/products/1/reviews/
+FNot Found: 
+/api/reviews/reviews/1/
+FNot Found: /api/reviews/produ
+cts/1/reviews/
+F
+==============================
+==============================
+==========
+ERROR: test_list_addresses (ac
+counts.tests.AddressAPITests.t
+est_list_addresses)
+Test listing user addresses
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\accounts
+\tests.py", line 166, in 
+test_list_addresses
+    Address.objects.create(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        user=self.user,
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        country='US'
+        ^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 663, in 
+create
+    obj = self.model(**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 569, in 
+__init__
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: Address() got 
+unexpected keyword arguments: 
+'postal_code'
+
+==============================
+==============================
+==========
+ERROR: test_create_address (ac
+counts.tests.AddressModelTests
+.test_create_address)
+Test creating an address
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\accounts
+\tests.py", line 74, in 
+test_create_address
+    address = 
+Address.objects.create(
+        user=self.user,
+    ...<5 lines>...
+        
+address_type='shipping'
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 663, in 
+create
+    obj = self.model(**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 569, in 
+__init__
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: Address() got 
+unexpected keyword arguments: 
+'postal_code'
+
+==============================
+==============================
+==========
+ERROR: setUpClass (analytics.t
+ests.AnalyticsDashboardAPITest
+s)
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT 
+NULL constraint failed: analyt
+ics_salesreport.average_order_
+value
+
+The above exception was the 
+direct cause of the following 
+exception:
+
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 537, in 
+setUpTestData
+    
+SalesReport.objects.create(
+    
+~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        
+report_date=report_date,
+        
+^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        total_customers=18 + i
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 665, in 
+create
+    
+obj.save(force_insert=True, 
+using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        
+update_fields=update_fields,
+        
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1008, in 
+save_base
+    updated = 
+self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1169, in 
+_save_table
+    results = self._do_insert(
+        cls._base_manager, 
+using, fields, 
+returning_fields, raw
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1210, in 
+_do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 1873, in 
+_insert
+    return query.get_compiler(
+using=using).execute_sql(retur
+ning_fields)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\sql\compiler.py", line 
+1882, in execute_sql
+    cursor.execute(sql, 
+params)
+    
+~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 79, in 
+execute
+    return 
+self._execute_with_wrappers(
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, 
+many=False, 
+executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 92, in 
+_execute_with_wrappers
+    return executor(sql, 
+params, many, context)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 100, in 
+_execute
+    with 
+self.db.wrap_database_errors:
+         
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\util
+s.py", line 91, in __exit__
+    raise dj_exc_value.with_tr
+aceback(traceback) from 
+exc_value
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError
+: NOT NULL constraint failed: 
+analytics_salesreport.average_
+order_value
+
+==============================
+==============================
+==========
+ERROR: 
+test_get_page_views_today (ana
+lytics.tests.AnalyticsManagerT
+ests.test_get_page_views_today
+)
+Test getting page views for 
+today
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 212, in 
+test_get_page_views_today
+    today_views = PageView.obj
+ects.get_today_views()
+                  ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Manager' 
+object has no attribute 
+'get_today_views'
+
+==============================
+==============================
+==========
+ERROR: 
+test_get_popular_products (ana
+lytics.tests.AnalyticsManagerT
+ests.test_get_popular_products
+)
+Test getting most viewed 
+products
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 237, in 
+test_get_popular_products
+    popular_products = Product
+View.objects.get_popular_produ
+cts(limit=2)
+                       ^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^
+AttributeError: 'Manager' 
+object has no attribute 
+'get_popular_products'
+
+==============================
+==============================
+==========
+ERROR: 
+test_get_product_views_today (
+analytics.tests.AnalyticsManag
+erTests.test_get_product_views
+_today)
+Test getting product views 
+for today
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 218, in 
+test_get_product_views_today
+    today_views = ProductView.
+objects.get_today_views()
+                  ^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Manager' 
+object has no attribute 
+'get_today_views'
+
+==============================
+==============================
+==========
+ERROR: 
+test_create_product_view (anal
+ytics.tests.ProductViewModelTe
+sts.test_create_product_view)
+Test creating a product view
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 81, in 
+test_create_product_view
+    product_view = 
+ProductView.objects.create(
+        user=self.user,
+    ...<3 lines>...
+        view_duration=30  # 
+30 seconds
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 663, in 
+create
+    obj = self.model(**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 569, in 
+__init__
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: ProductView() got 
+unexpected keyword arguments: 
+'ip_address'
+
+==============================
+==============================
+==========
+ERROR: 
+test_generate_daily_report (an
+alytics.tests.SalesReportAPITe
+sts.test_generate_daily_report
+)
+Test generating daily sales 
+report
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 487, in 
+test_generate_daily_report
+    OrderItem.objects.create(o
+rder=order1, product=product, 
+quantity=2, 
+price=Decimal('100.00'))
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 663, in 
+create
+    obj = self.model(**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 569, in 
+__init__
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: OrderItem() got 
+unexpected keyword arguments: 
+'product', 'price'
+
+==============================
+==============================
+==========
+ERROR: test_sales_report_calcu
+lations (analytics.tests.Sales
+ReportModelTests.test_sales_re
+port_calculations)
+Test sales report calculated 
+fields
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT 
+NULL constraint failed: analyt
+ics_salesreport.average_order_
+value
+
+The above exception was the 
+direct cause of the following 
+exception:
+
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 150, in 
+test_sales_report_calculations
+    sales_report = 
+SalesReport.objects.create(
+        
+report_date=report_date,
+    ...<2 lines>...
+        total_customers=35
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 665, in 
+create
+    
+obj.save(force_insert=True, 
+using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        
+update_fields=update_fields,
+        
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1008, in 
+save_base
+    updated = 
+self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1169, in 
+_save_table
+    results = self._do_insert(
+        cls._base_manager, 
+using, fields, 
+returning_fields, raw
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1210, in 
+_do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 1873, in 
+_insert
+    return query.get_compiler(
+using=using).execute_sql(retur
+ning_fields)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\sql\compiler.py", line 
+1882, in execute_sql
+    cursor.execute(sql, 
+params)
+    
+~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 79, in 
+execute
+    return 
+self._execute_with_wrappers(
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, 
+many=False, 
+executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 92, in 
+_execute_with_wrappers
+    return executor(sql, 
+params, many, context)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 100, in 
+_execute
+    with 
+self.db.wrap_database_errors:
+         
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\util
+s.py", line 91, in __exit__
+    raise dj_exc_value.with_tr
+aceback(traceback) from 
+exc_value
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError
+: NOT NULL constraint failed: 
+analytics_salesreport.average_
+order_value
+
+==============================
+==============================
+==========
+ERROR: 
+test_sales_report_unique_date 
+(analytics.tests.SalesReportMo
+delTests.test_sales_report_uni
+que_date)
+Test that sales report date 
+is unique
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT 
+NULL constraint failed: analyt
+ics_salesreport.total_customer
+s
+
+The above exception was the 
+direct cause of the following 
+exception:
+
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 164, in 
+test_sales_report_unique_date
+    
+SalesReport.objects.create(
+    
+~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        
+report_date=report_date,
+        
+^^^^^^^^^^^^^^^^^^^^^^^^
+        total_revenue=Decimal(
+'500.00'),
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+        total_orders=10
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 665, in 
+create
+    
+obj.save(force_insert=True, 
+using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        
+update_fields=update_fields,
+        
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1008, in 
+save_base
+    updated = 
+self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1169, in 
+_save_table
+    results = self._do_insert(
+        cls._base_manager, 
+using, fields, 
+returning_fields, raw
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1210, in 
+_do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 1873, in 
+_insert
+    return query.get_compiler(
+using=using).execute_sql(retur
+ning_fields)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\sql\compiler.py", line 
+1882, in execute_sql
+    cursor.execute(sql, 
+params)
+    
+~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 79, in 
+execute
+    return 
+self._execute_with_wrappers(
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, 
+many=False, 
+executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 92, in 
+_execute_with_wrappers
+    return executor(sql, 
+params, many, context)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 100, in 
+_execute
+    with 
+self.db.wrap_database_errors:
+         
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\util
+s.py", line 91, in __exit__
+    raise dj_exc_value.with_tr
+aceback(traceback) from 
+exc_value
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError
+: NOT NULL constraint failed: 
+analytics_salesreport.total_cu
+stomers
+
+==============================
+==============================
+==========
+ERROR: 
+test_add_item_exceeding_stock 
+(cart.tests.CartAPITests.test_
+add_item_exceeding_stock)
+Test adding more items than 
+available stock
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT 
+NULL constraint failed: 
+cart_cartitem.product_id
+
+The above exception was the 
+direct cause of the following 
+exception:
+
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\cart\tes
+ts.py", line 222, in 
+test_add_item_exceeding_stock
+    response = 
+self.client.post(url, data)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 299, in post
+    response = super().post(
+        path, data=data, 
+format=format, 
+content_type=content_type, 
+**extra)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 213, in post
+    return 
+self.generic('POST', path, 
+data, content_type, **extra)
+           ~~~~~~~~~~~~^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 237, in 
+generic
+    return super().generic(
+           ~~~~~~~~~~~~~~~^
+        method, path, data, 
+content_type, secure, **extra)
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 671, in generic
+    return self.request(**r)
+           ~~~~~~~~~~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 289, in 
+request
+    return 
+super().request(**kwargs)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 241, in 
+request
+    request = 
+super().request(**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 1087, in 
+request
+    
+self.check_exception(response)
+    
+~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 802, in 
+check_exception
+    raise exc_value
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\exception.py", line 
+55, in inner
+    response = 
+get_response(request)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\base.py", line 197, in 
+_get_response
+    response = 
+wrapped_callback(request, 
+*callback_args, 
+**callback_kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\views\d
+ecorators\csrf.py", line 65, 
+in _view_wrapper
+    return view_func(request, 
+*args, **kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\viewsets.py", line 125, in 
+view
+    return 
+self.dispatch(request, *args, 
+**kwargs)
+           ~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 515, in 
+dispatch
+    response = 
+self.handle_exception(exc)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 475, in 
+handle_exception
+    self.raise_uncaught_except
+ion(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 486, in 
+raise_uncaught_exception
+    raise exc
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 512, in 
+dispatch
+    response = 
+handler(request, *args, 
+**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\mixins.py", line 19, in 
+create
+    self.perform_create(serial
+izer)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^
+^^^^^
+  File "d:\comf\alcom\cart\vie
+ws.py", line 82, in 
+perform_create
+    serializer.save(cart=cart)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\serializers.py", line 210, 
+in save
+    self.instance = 
+self.create(validated_data)
+                    
+~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\serializers.py", line 991, 
+in create
+    instance = ModelClass._def
+ault_manager.create(**validate
+d_data)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 665, in 
+create
+    
+obj.save(force_insert=True, 
+using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        
+update_fields=update_fields,
+        
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1008, in 
+save_base
+    updated = 
+self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1169, in 
+_save_table
+    results = self._do_insert(
+        cls._base_manager, 
+using, fields, 
+returning_fields, raw
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1210, in 
+_do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 1873, in 
+_insert
+    return query.get_compiler(
+using=using).execute_sql(retur
+ning_fields)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\sql\compiler.py", line 
+1882, in execute_sql
+    cursor.execute(sql, 
+params)
+    
+~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 79, in 
+execute
+    return 
+self._execute_with_wrappers(
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, 
+many=False, 
+executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 92, in 
+_execute_with_wrappers
+    return executor(sql, 
+params, many, context)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 100, in 
+_execute
+    with 
+self.db.wrap_database_errors:
+         
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\util
+s.py", line 91, in __exit__
+    raise dj_exc_value.with_tr
+aceback(traceback) from 
+exc_value
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError
+: NOT NULL constraint failed: 
+cart_cartitem.product_id
+
+==============================
+==============================
+==========
+ERROR: test_add_item_to_cart (
+cart.tests.CartAPITests.test_a
+dd_item_to_cart)
+Test adding item to cart via 
+API
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: NOT 
+NULL constraint failed: 
+cart_cartitem.product_id
+
+The above exception was the 
+direct cause of the following 
+exception:
+
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\cart\tes
+ts.py", line 178, in 
+test_add_item_to_cart
+    response = 
+self.client.post(url, data)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 299, in post
+    response = super().post(
+        path, data=data, 
+format=format, 
+content_type=content_type, 
+**extra)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 213, in post
+    return 
+self.generic('POST', path, 
+data, content_type, **extra)
+           ~~~~~~~~~~~~^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 237, in 
+generic
+    return super().generic(
+           ~~~~~~~~~~~~~~~^
+        method, path, data, 
+content_type, secure, **extra)
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 671, in generic
+    return self.request(**r)
+           ~~~~~~~~~~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 289, in 
+request
+    return 
+super().request(**kwargs)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 241, in 
+request
+    request = 
+super().request(**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 1087, in 
+request
+    
+self.check_exception(response)
+    
+~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 802, in 
+check_exception
+    raise exc_value
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\exception.py", line 
+55, in inner
+    response = 
+get_response(request)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\base.py", line 197, in 
+_get_response
+    response = 
+wrapped_callback(request, 
+*callback_args, 
+**callback_kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\views\d
+ecorators\csrf.py", line 65, 
+in _view_wrapper
+    return view_func(request, 
+*args, **kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\viewsets.py", line 125, in 
+view
+    return 
+self.dispatch(request, *args, 
+**kwargs)
+           ~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 515, in 
+dispatch
+    response = 
+self.handle_exception(exc)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 475, in 
+handle_exception
+    self.raise_uncaught_except
+ion(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 486, in 
+raise_uncaught_exception
+    raise exc
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 512, in 
+dispatch
+    response = 
+handler(request, *args, 
+**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\mixins.py", line 19, in 
+create
+    self.perform_create(serial
+izer)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^
+^^^^^
+  File "d:\comf\alcom\cart\vie
+ws.py", line 82, in 
+perform_create
+    serializer.save(cart=cart)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\serializers.py", line 210, 
+in save
+    self.instance = 
+self.create(validated_data)
+                    
+~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\serializers.py", line 991, 
+in create
+    instance = ModelClass._def
+ault_manager.create(**validate
+d_data)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 665, in 
+create
+    
+obj.save(force_insert=True, 
+using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 902, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        
+update_fields=update_fields,
+        
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1008, in 
+save_base
+    updated = 
+self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1169, in 
+_save_table
+    results = self._do_insert(
+        cls._base_manager, 
+using, fields, 
+returning_fields, raw
+    )
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\base.py", line 1210, in 
+_do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 1873, in 
+_insert
+    return query.get_compiler(
+using=using).execute_sql(retur
+ning_fields)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\sql\compiler.py", line 
+1882, in execute_sql
+    cursor.execute(sql, 
+params)
+    
+~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 79, in 
+execute
+    return 
+self._execute_with_wrappers(
+           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, 
+many=False, 
+executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 92, in 
+_execute_with_wrappers
+    return executor(sql, 
+params, many, context)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 100, in 
+_execute
+    with 
+self.db.wrap_database_errors:
+         
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\util
+s.py", line 91, in __exit__
+    raise dj_exc_value.with_tr
+aceback(traceback) from 
+exc_value
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\utils.py", line 105, in 
+_execute
+    return 
+self.cursor.execute(sql, 
+params)
+           ~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\back
+ends\sqlite3\base.py", line 
+360, in execute
+    return 
+super().execute(query, params)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError
+: NOT NULL constraint failed: 
+cart_cartitem.product_id
+
+==============================
+==============================
+==========
+ERROR: 
+test_remove_item_from_cart (ca
+rt.tests.CartAPITests.test_rem
+ove_item_from_cart)
+Test removing item from cart
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\cart\tes
+ts.py", line 203, in 
+test_remove_item_from_cart
+    cart = Cart.objects.get(us
+er=self.user)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 635, in get
+    raise 
+self.model.DoesNotExist(
+        "%s matching query 
+does not exist." % 
+self.model._meta.object_name
+    )
+cart.models.Cart.DoesNotExist:
+ Cart matching query does not 
+exist.
+
+==============================
+==============================
+==========
+ERROR: test_update_cart_item_q
+uantity (cart.tests.CartAPITes
+ts.test_update_cart_item_quant
+ity)
+Test updating cart item 
+quantity
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\cart\tes
+ts.py", line 186, in 
+test_update_cart_item_quantity
+    cart = Cart.objects.get(us
+er=self.user)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\manager.py", line 87, in 
+manager_method
+    return 
+getattr(self.get_queryset(), 
+name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\db\mode
+ls\query.py", line 635, in get
+    raise 
+self.model.DoesNotExist(
+        "%s matching query 
+does not exist." % 
+self.model._meta.object_name
+    )
+cart.models.Cart.DoesNotExist:
+ Cart matching query does not 
+exist.
+
+==============================
+==============================
+==========
+ERROR: test_create_payment (pa
+yments.tests.PaymentAPITests.t
+est_create_payment)
+Test creating a payment
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\payments
+\tests.py", line 102, in 
+test_create_payment
+    response = 
+self.client.post(url, data)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 299, in post
+    response = super().post(
+        path, data=data, 
+format=format, 
+content_type=content_type, 
+**extra)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 213, in post
+    return 
+self.generic('POST', path, 
+data, content_type, **extra)
+           ~~~~~~~~~~~~^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 237, in 
+generic
+    return super().generic(
+           ~~~~~~~~~~~~~~~^
+        method, path, data, 
+content_type, secure, **extra)
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 671, in generic
+    return self.request(**r)
+           ~~~~~~~~~~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 289, in 
+request
+    return 
+super().request(**kwargs)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 241, in 
+request
+    request = 
+super().request(**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 1087, in 
+request
+    
+self.check_exception(response)
+    
+~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 802, in 
+check_exception
+    raise exc_value
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\exception.py", line 
+55, in inner
+    response = 
+get_response(request)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\base.py", line 197, in 
+_get_response
+    response = 
+wrapped_callback(request, 
+*callback_args, 
+**callback_kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\views\d
+ecorators\csrf.py", line 65, 
+in _view_wrapper
+    return view_func(request, 
+*args, **kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\viewsets.py", line 125, in 
+view
+    return 
+self.dispatch(request, *args, 
+**kwargs)
+           ~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 515, in 
+dispatch
+    response = 
+self.handle_exception(exc)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 475, in 
+handle_exception
+    self.raise_uncaught_except
+ion(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 486, in 
+raise_uncaught_exception
+    raise exc
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 512, in 
+dispatch
+    response = 
+handler(request, *args, 
+**kwargs)
+  File "d:\comf\alcom\payments
+\views.py", line 28, in create
+    order = serializer.validat
+ed_data['order']
+            ~~~~~~~~~~~~~~~~~~
+~~~~~~~^^^^^^^^^
+KeyError: 'order'
+
+==============================
+==============================
+==========
+ERROR: test_create_payment_inv
+alid_order (payments.tests.Pay
+mentAPITests.test_create_payme
+nt_invalid_order)
+Test creating payment for 
+order that doesn't belong to 
+user
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\payments
+\tests.py", line 126, in test_
+create_payment_invalid_order
+    response = 
+self.client.post(url, data)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 299, in post
+    response = super().post(
+        path, data=data, 
+format=format, 
+content_type=content_type, 
+**extra)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 213, in post
+    return 
+self.generic('POST', path, 
+data, content_type, **extra)
+           ~~~~~~~~~~~~^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 237, in 
+generic
+    return super().generic(
+           ~~~~~~~~~~~~~~~^
+        method, path, data, 
+content_type, secure, **extra)
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 671, in generic
+    return self.request(**r)
+           ~~~~~~~~~~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 289, in 
+request
+    return 
+super().request(**kwargs)
+           
+~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\test.py", line 241, in 
+request
+    request = 
+super().request(**kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 1087, in 
+request
+    
+self.check_exception(response)
+    
+~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\test\cl
+ient.py", line 802, in 
+check_exception
+    raise exc_value
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\exception.py", line 
+55, in inner
+    response = 
+get_response(request)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\core\ha
+ndlers\base.py", line 197, in 
+_get_response
+    response = 
+wrapped_callback(request, 
+*callback_args, 
+**callback_kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\django\views\d
+ecorators\csrf.py", line 65, 
+in _view_wrapper
+    return view_func(request, 
+*args, **kwargs)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\viewsets.py", line 125, in 
+view
+    return 
+self.dispatch(request, *args, 
+**kwargs)
+           ~~~~~~~~~~~~~^^^^^^
+^^^^^^^^^^^^^^^^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 515, in 
+dispatch
+    response = 
+self.handle_exception(exc)
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 475, in 
+handle_exception
+    self.raise_uncaught_except
+ion(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~^^^^^
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 486, in 
+raise_uncaught_exception
+    raise exc
+  File "D:\comf\alcom\myenv\Li
+b\site-packages\rest_framework
+\views.py", line 512, in 
+dispatch
+    response = 
+handler(request, *args, 
+**kwargs)
+  File "d:\comf\alcom\payments
+\views.py", line 28, in create
+    order = serializer.validat
+ed_data['order']
+            ~~~~~~~~~~~~~~~~~~
+~~~~~~~^^^^^^^^^
+KeyError: 'order'
+
+==============================
+==============================
+==========
+ERROR: test_create_category (p
+roducts.tests.CategoryModelTes
+ts.test_create_category)
+Test creating a category
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\products
+\tests.py", line 19, in 
+test_create_category
+    self.assertTrue(category.i
+s_active)
+                    
+^^^^^^^^^^^^^^^^^^
+AttributeError: 'Category' 
+object has no attribute 
+'is_active'
+
+==============================
+==============================
+==========
+ERROR: 
+test_filter_by_category (produ
+cts.tests.ProductAPITests.test
+_filter_by_category)
+Test filtering products by 
+category
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\products
+\tests.py", line 193, in 
+test_filter_by_category
+    self.assertTrue(all(
+                    ~~~^
+        item['category'] == 
+self.category.id for item in 
+response.data
+        ^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
+    ))
+    ^
+  File "d:\comf\alcom\products
+\tests.py", line 194, in 
+<genexpr>
+    item['category'] == 
+self.category.id for item in 
+response.data
+    ~~~~^^^^^^^^^^^^
+TypeError: string indices 
+must be integers, not 'str'
+
+==============================
+==============================
+==========
+FAIL: test_create_user_without
+_email (accounts.tests.UserMod
+elTests.test_create_user_witho
+ut_email)
+Test creating user without 
+email raises error
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\accounts
+\tests.py", line 28, in 
+test_create_user_without_email
+    with 
+self.assertRaises(ValueError):
+         
+~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError 
+not raised
+
+==============================
+==============================
+==========
+FAIL: 
+test_create_user_profile (acco
+unts.tests.UserProfileModelTes
+ts.test_create_user_profile)
+Test creating a user profile
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\accounts
+\tests.py", line 62, in 
+test_create_user_profile
+    self.assertEqual(str(profi
+le), 'profiletest Profile')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Profile for 
+profiletest' != 'profiletest 
+Profile'
+- Profile for profiletest
++ profiletest Profile
+
+
+==============================
+==============================
+==========
+FAIL: test_list_page_views_adm
+in_only (analytics.tests.PageV
+iewAPITests.test_list_page_vie
+ws_admin_only)
+Test that only staff users 
+can list page views
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 307, in test
+_list_page_views_admin_only
+    self.assertEqual(response.
+status_code, 
+status.HTTP_403_FORBIDDEN)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^
+AssertionError: 404 != 403
+
+==============================
+==============================
+==========
+FAIL: 
+test_list_page_views_as_admin 
+(analytics.tests.PageViewAPITe
+sts.test_list_page_views_as_ad
+min)
+Test listing page views as 
+admin user
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 320, in 
+test_list_page_views_as_admin
+    self.assertEqual(response.
+status_code, 
+status.HTTP_200_OK)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^
+AssertionError: 404 != 200
+
+==============================
+==============================
+==========
+FAIL: test_track_page_view (an
+alytics.tests.PageViewAPITests
+.test_track_page_view)
+Test tracking a page view via 
+API
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 279, in 
+test_track_page_view
+    self.assertEqual(response.
+status_code, 
+status.HTTP_201_CREATED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+AssertionError: 404 != 201
+
+==============================
+==============================
+==========
+FAIL: test_track_page_view_una
+uthenticated (analytics.tests.
+PageViewAPITests.test_track_pa
+ge_view_unauthenticated)
+Test tracking page view 
+without authentication
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 297, in test
+_track_page_view_unauthenticat
+ed
+    self.assertEqual(response.
+status_code, 
+status.HTTP_201_CREATED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+AssertionError: 404 != 201
+
+==============================
+==============================
+==========
+FAIL: test_create_page_view (a
+nalytics.tests.PageViewModelTe
+sts.test_create_page_view)
+Test creating a page view
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 34, in 
+test_create_page_view
+    self.assertEqual(str(page_
+view), 'pagetest - 
+/products/')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^
+AssertionError: 
+'page@example.com - 
+/products/' != 'pagetest - 
+/products/'
+- page@example.com - 
+/products/
++ pagetest - /products/
+
+
+==============================
+==============================
+==========
+FAIL: 
+test_page_view_timestamps (ana
+lytics.tests.PageViewModelTest
+s.test_page_view_timestamps)
+Test page view created_at and 
+updated_at timestamps
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 58, in 
+test_page_view_timestamps
+    self.assertEqual(page_view
+.created_at, 
+page_view.updated_at)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^
+AssertionError: 
+datetime.datetime(2026, 3, 
+10, 18, 30, 26, 916250, 
+tzinfo=datetime.timezone.utc) 
+!= datetime.datetime(2026, 3, 
+10, 18, 30, 26, 916262, 
+tzinfo=datetime.timezone.utc)
+
+==============================
+==============================
+==========
+FAIL: test_track_product_view 
+(analytics.tests.ProductViewAP
+ITests.test_track_product_view
+)
+Test tracking a product view 
+via API
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 363, in 
+test_track_product_view
+    self.assertEqual(response.
+status_code, 
+status.HTTP_201_CREATED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+AssertionError: 404 != 201
+
+==============================
+==============================
+==========
+FAIL: test_track_product_view_
+invalid_product (analytics.tes
+ts.ProductViewAPITests.test_tr
+ack_product_view_invalid_produ
+ct)
+Test tracking view for 
+non-existent product
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 389, in test
+_track_product_view_invalid_pr
+oduct
+    self.assertEqual(response.
+status_code, 
+status.HTTP_400_BAD_REQUEST)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^
+AssertionError: 404 != 400
+
+==============================
+==============================
+==========
+FAIL: test_track_product_view_
+with_duration (analytics.tests
+.ProductViewAPITests.test_trac
+k_product_view_with_duration)
+Test tracking product view 
+with duration
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 376, in test
+_track_product_view_with_durat
+ion
+    self.assertEqual(response.
+status_code, 
+status.HTTP_201_CREATED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+AssertionError: 404 != 201
+
+==============================
+==============================
+==========
+FAIL: test_create_sales_report
+_admin_only (analytics.tests.S
+alesReportAPITests.test_create
+_sales_report_admin_only)
+Test that only admins can 
+create sales reports
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 463, in test
+_create_sales_report_admin_onl
+y
+    self.assertEqual(response.
+status_code, 
+status.HTTP_403_FORBIDDEN)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^
+AssertionError: 404 != 403
+
+==============================
+==============================
+==========
+FAIL: 
+test_get_sales_report_detail (
+analytics.tests.SalesReportAPI
+Tests.test_get_sales_report_de
+tail)
+Test retrieving sales report 
+detail
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 449, in 
+test_get_sales_report_detail
+    self.assertEqual(response.
+status_code, 
+status.HTTP_200_OK)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^
+AssertionError: 404 != 200
+
+==============================
+==============================
+==========
+FAIL: test_list_sales_reports_
+admin_only (analytics.tests.Sa
+lesReportAPITests.test_list_sa
+les_reports_admin_only)
+Test that only admins can 
+list sales reports
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 432, in test
+_list_sales_reports_admin_only
+    self.assertEqual(response.
+status_code, 
+status.HTTP_403_FORBIDDEN)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^
+AssertionError: 404 != 403
+
+==============================
+==============================
+==========
+FAIL: test_list_sales_reports_
+as_admin (analytics.tests.Sale
+sReportAPITests.test_list_sale
+s_reports_as_admin)
+Test listing sales reports as 
+admin
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\analytic
+s\tests.py", line 439, in test
+_list_sales_reports_as_admin
+    self.assertEqual(response.
+status_code, 
+status.HTTP_200_OK)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^
+AssertionError: 404 != 200
+
+==============================
+==============================
+==========
+FAIL: test_get_user_cart (cart
+.tests.CartAPITests.test_get_u
+ser_cart)
+Test retrieving user's cart
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\cart\tes
+ts.py", line 169, in 
+test_get_user_cart
+    self.assertTrue('id' in 
+response.data)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^
+^^^^^^^^^^^^
+AssertionError: False is not 
+true
+
+==============================
+==============================
+==========
+FAIL: 
+test_apply_invalid_coupon (car
+t.tests.CouponAPITests.test_ap
+ply_invalid_coupon)
+Test applying an invalid 
+coupon
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\cart\tes
+ts.py", line 258, in 
+test_apply_invalid_coupon
+    self.assertEqual(response.
+status_code, 
+status.HTTP_400_BAD_REQUEST)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^
+AssertionError: 405 != 400
+
+==============================
+==============================
+==========
+FAIL: test_apply_valid_coupon 
+(cart.tests.CouponAPITests.tes
+t_apply_valid_coupon)
+Test applying a valid coupon 
+to cart
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\cart\tes
+ts.py", line 250, in 
+test_apply_valid_coupon
+    self.assertEqual(response.
+status_code, 
+status.HTTP_200_OK)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^
+AssertionError: 405 != 200
+
+==============================
+==============================
+==========
+FAIL: test_create_order (order
+s.tests.OrderAPITests.test_cre
+ate_order)
+Test creating an order via API
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\orders\t
+ests.py", line 55, in 
+test_create_order
+    self.assertEqual(response.
+status_code, 
+status.HTTP_201_CREATED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+AssertionError: 400 != 201
+
+==============================
+==============================
+==========
+FAIL: test_get_order_detail (o
+rders.tests.OrderAPITests.test
+_get_order_detail)
+Test retrieving a single order
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\orders\t
+ests.py", line 75, in 
+test_get_order_detail
+    self.assertEqual(response.
+data['total_amount'], 
+'123.45')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^
+AssertionError: 
+Decimal('123.45') != '123.45'
+
+==============================
+==============================
+==========
+FAIL: test_list_orders (orders
+.tests.OrderAPITests.test_list
+_orders)
+Test listing user's orders
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\orders\t
+ests.py", line 67, in 
+test_list_orders
+Found 85 test(s).
+System check identified no issues (0 silenced).
+    self.assertEqual(len(respo
+nse.data), 2)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^
+AssertionError: 4 != 2
+
+==============================
+==============================
+==========
+FAIL: 
+test_list_payment_methods (pay
+ments.tests.PaymentAPITests.te
+st_list_payment_methods)
+Test listing available 
+payment methods
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\payments
+\tests.py", line 88, in 
+test_list_payment_methods
+    self.assertEqual(len(respo
+nse.data), 2)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^
+AssertionError: 4 != 2
+
+==============================
+==============================
+==========
+FAIL: test_list_user_payments 
+(payments.tests.PaymentAPITest
+s.test_list_user_payments)
+Test listing user's payments
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\payments
+\tests.py", line 141, in 
+test_list_user_payments
+    self.assertEqual(len(respo
+nse.data), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^
+AssertionError: 4 != 1
+
+==============================
+==============================
+==========
+FAIL: 
+test_get_category_detail (prod
+ucts.tests.CategoryAPITests.te
+st_get_category_detail)
+Test retrieving single 
+category
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\products
+\tests.py", line 119, in 
+test_get_category_detail
+    self.assertEqual(response.
+status_code, 
+status.HTTP_200_OK)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^
+AssertionError: 404 != 200
+
+==============================
+==============================
+==========
+FAIL: test_list_categories (pr
+oducts.tests.CategoryAPITests.
+test_list_categories)
+Test listing all categories
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\products
+\tests.py", line 112, in 
+test_list_categories
+    self.assertEqual(len(respo
+nse.data), 2)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^
+AssertionError: 4 != 2
+
+==============================
+==============================
+==========
+FAIL: test_get_product_detail 
+(products.tests.ProductAPITest
+s.test_get_product_detail)
+Test retrieving single product
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\products
+\tests.py", line 164, in 
+test_get_product_detail
+    self.assertEqual(response.
+status_code, 
+status.HTTP_200_OK)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^
+AssertionError: 404 != 200
+
+==============================
+==============================
+==========
+FAIL: test_list_products (prod
+ucts.tests.ProductAPITests.tes
+t_list_products)
+Test listing all products
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\products
+\tests.py", line 158, in 
+test_list_products
+    self.assertEqual(len(respo
+nse.data), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^
+AssertionError: 4 != 1
+
+==============================
+==============================
+==========
+FAIL: test_price_filtering (pr
+oducts.tests.ProductAPITests.t
+est_price_filtering)
+Test filtering products by 
+price range
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\products
+\tests.py", line 202, in 
+test_price_filtering
+    self.assertEqual(len(respo
+nse.data), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^
+AssertionError: 4 != 1
+
+==============================
+==============================
+==========
+FAIL: test_search_products (pr
+oducts.tests.ProductAPITests.t
+est_search_products)
+Test product search 
+functionality
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\products
+\tests.py", line 173, in 
+test_search_products
+    self.assertEqual(len(respo
+nse.data), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^
+AssertionError: 4 != 1
+
+==============================
+==============================
+==========
+FAIL: 
+test_create_product_image (pro
+ducts.tests.ProductImageModelT
+ests.test_create_product_image
+)
+Test creating a product image
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\products
+\tests.py", line 98, in 
+test_create_product_image
+    
+self.assertEqual(str(image), 
+'Test Product - Test image')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^
+AssertionError: 'Image for 
+Test Product (Order: 0)' != 
+'Test Product - Test image'
+- Image for Test Product 
+(Order: 0)
++ Test Product - Test image
+
+
+==============================
+==============================
+==========
+FAIL: test_create_review (revi
+ews.tests.ReviewAPITests.test_
+create_review)
+Test creating a review for a 
+product
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\reviews\
+tests.py", line 61, in 
+test_create_review
+    self.assertEqual(response.
+status_code, 
+status.HTTP_201_CREATED)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
+AssertionError: 404 != 201
+
+==============================
+==============================
+==========
+FAIL: test_get_review_detail (
+reviews.tests.ReviewAPITests.t
+est_get_review_detail)
+Test retrieving a single 
+review
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\reviews\
+tests.py", line 84, in 
+test_get_review_detail
+    self.assertEqual(response.
+status_code, 
+status.HTTP_200_OK)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^
+AssertionError: 404 != 200
+
+==============================
+==============================
+==========
+FAIL: 
+test_list_reviews_for_product 
+(reviews.tests.ReviewAPITests.
+test_list_reviews_for_product)
+Test listing reviews for a 
+specific product
+------------------------------
+------------------------------
+----------
+Traceback (most recent call 
+last):
+  File "d:\comf\alcom\reviews\
+tests.py", line 73, in 
+test_list_reviews_for_product
+    self.assertEqual(response.
+status_code, 
+status.HTTP_200_OK)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^
+AssertionError: 404 != 200
+
+------------------------------
+------------------------------
+----------
+Ran 80 tests in 43.397s
+
+FAILED (failures=33, 
+errors=18)
+Destroying test database for 
+alias 'default'...
+

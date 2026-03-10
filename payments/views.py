@@ -31,14 +31,14 @@ class PaymentViewSet(viewsets.ModelViewSet):
         if order.user != request.user:
             return Response(
                 {'error': 'Order not found'}, 
-                status=status.HTTP_404_NOT_FOUND
+                status=status.HTTP_400_BAD_REQUEST
             )
 
         # Create payment
         payment = serializer.save()
 
         # Process payment based on method
-        if payment.payment_method == 'stripe':
+        if payment.payment_method and payment.payment_method.name.lower() == 'stripe':
             # Implement Stripe payment logic
             try:
                 # This is a simplified example
@@ -68,7 +68,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
     def confirm(self, request, pk=None):
         payment = self.get_object()
         
-        if payment.payment_method == 'stripe':
+        if payment.payment_method and payment.payment_method.name.lower() == 'stripe':
             try:
                 intent = stripe.PaymentIntent.retrieve(payment.stripe_payment_intent_id)
                 if intent.status == 'succeeded':

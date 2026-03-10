@@ -14,6 +14,9 @@ class PaymentMethod(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
+
 # 2. Payment Model
 class Payment(models.Model):
     """
@@ -32,6 +35,9 @@ class Payment(models.Model):
     currency = models.CharField(max_length=10, default='USD')
     status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='PENDING')
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-timestamp']
 
     def __str__(self):
         if self.order:
@@ -67,4 +73,4 @@ class Refund(models.Model):
     processed_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return f"Refund of {self.amount} for Order {self.order.id}"
+        return f"Refund of {self.amount} for Payment {self.payment.id}"

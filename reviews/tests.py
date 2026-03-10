@@ -10,7 +10,7 @@ User = get_user_model()
 
 class RatingAndReviewModelTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='ratingtest', password='pass')
+        self.user = User.objects.create_user(username='ratingtest', email='rating@example.com', password='pass')
         self.category = Category.objects.create(name='Test', slug='test')
         self.brand = Brand.objects.create(name='ReviewBrand', description='Brand')
         self.product = Product.objects.create(name='Test Product', slug='test-product', base_price=99.99, category=self.category, brand=self.brand, is_active=True)
@@ -71,8 +71,15 @@ class ReviewAPITests(APITestCase):
         url = f'/api/reviews/products/{self.product.id}/reviews/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['title'], 'Good')
+        
+        # Handle pagination
+        if isinstance(response.data, dict) and 'results' in response.data:
+            results = response.data['results']
+        else:
+            results = response.data
+            
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['title'], 'Good')
 
     def test_get_review_detail(self):
         """Test retrieving a single review"""

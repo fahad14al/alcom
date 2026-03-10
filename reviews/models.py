@@ -29,6 +29,10 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_approved = models.BooleanField(default=False, help_text="Approve the review to make it public")
+    helpful_votes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='helpful_reviews', blank=True)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.title

@@ -1,7 +1,6 @@
 from django.db import models
 from django.conf import settings
-# from products.models import Product
-# from accounts.models import Address
+from products.models import Product, ProductVariant
 
 # 1. OrderStatus Model
 class OrderStatus(models.Model):
@@ -13,6 +12,7 @@ class OrderStatus(models.Model):
 
     class Meta:
         verbose_name_plural = "Order Statuses"
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -36,21 +36,26 @@ class Order(models.Model):
     Represents a customer's order.
     """
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders')
-    # shipping_address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, related_name='shipping_orders')
-    # billing_address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, related_name='billing_orders')
-    
     status = models.ForeignKey(OrderStatus, on_delete=models.SET_NULL, null=True, related_name='orders')
     shipping_method = models.ForeignKey(ShippingMethod, on_delete=models.SET_NULL, null=True)
     
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
-    # Tracking information
     tracking_number = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return f"Order {self.id} by {self.user.username}"
+
+    def can_cancel(self):
+        # Order can be cancelled if it's still pending (assuming 'Pending' is the status name)
+        if self.status and self.status.name == 'Pending':
+            return True
+        return False
 
 # 4. OrderItem Model
 class OrderItem(models.Model):
@@ -58,9 +63,11 @@ class OrderItem(models.Model):
     Represents a single item within an order.
     """
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
-    # product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField()
-    price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2, help_text="Price of the product at the time of purchase")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    variant = models.ForeignKey(ProductVariant, on_delete=models.SET_NULL, null=True, blank=True)
+    quantity = models.PositiveIntegerField(default=1)
+    price_at_purchase = models.DecimalField(max_digits=10, decimal_places=2, default=0, help_text="Price of the product at the time of purchase")
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
         return f"{self.quantity} of {self.product.name} in Order {self.order.id}"

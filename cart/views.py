@@ -19,6 +19,12 @@ class CartViewSet(viewsets.ModelViewSet):
         cart, created = Cart.objects.get_or_create(user=self.request.user)
         return cart
 
+    def list(self, request, *args, **kwargs):
+        # The test expects a single object for the user's cart
+        cart = self.get_object()
+        serializer = self.get_serializer(cart)
+        return Response(serializer.data)
+
     @action(detail=False, methods=['get'])
     def my_cart(self, request):
         cart = self.get_object()
@@ -85,3 +91,21 @@ class CouponViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Coupon.objects.filter(is_active=True)
     serializer_class = CouponSerializer
     permission_classes = [IsAuthenticated]
+
+    @action(detail=False, methods=['post'])
+    def apply(self, request):
+        code = request.data.get('code')
+        try:
+            coupon = Coupon.objects.get(code=code, is_active=True)
+            if coupon.is_valid():
+                # Apply it to user's cart
+                cart, _ = Cart.objects.get_or_create(user=request.user)
+                cart.coupon = coupon
+                cart.save()
+                
+                # The test expects specific fields in response
+                serializer = CartSerializer(cart)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response({'error': 'Coupon expired'}, status=status.HTTP_400_BAD_REQUEST)
+        except Coupon.DoesNotExist:
+            return Response({'error': 'Invalid coupon'}, status=status.HTTP_400_BAD_REQUEST)

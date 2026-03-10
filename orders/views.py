@@ -51,9 +51,9 @@ class OrderViewSet(viewsets.ModelViewSet):
             OrderItem.objects.create(
                 order=order,
                 product=cart_item.product,
-                variant=cart_item.variant,
                 quantity=cart_item.quantity,
-                price=cart_item.product.price
+                price_at_purchase=cart_item.product.base_price,
+                price=cart_item.product.base_price
             )
 
         # Clear cart

@@ -16,7 +16,7 @@ class OrdersSmokeTests(TestCase):
     """
 
     def setUp(self):
-        self.user = User.objects.create_user(username='ordertest', password='pass')
+        self.user = User.objects.create_user(username='ordertest', email='order@example.com', password='pass')
         self.shipping_method = ShippingMethod.objects.create(
             name='Standard', description='Standard', cost=Decimal('5.00'), is_active=True
         )
@@ -43,6 +43,18 @@ class OrderAPITests(APITestCase):
             name='Standard', description='Standard', cost=Decimal('5.00'), is_active=True
         )
         self.client.force_authenticate(user=self.user)
+        # Create a cart for the user
+        from cart.models import Cart, CartItem
+        from products.models import Product, Category, Brand
+        cart, _ = Cart.objects.get_or_create(user=self.user)
+        
+        category = Category.objects.create(name='Test', slug='test')
+        brand = Brand.objects.create(name='Test', description='Test')
+        product = Product.objects.create(
+            name='Test Product', slug='test-product', base_price=Decimal('100.00'), 
+            category=category, brand=brand, is_active=True, stock=10
+        )
+        CartItem.objects.create(cart=cart, product=product, quantity=1)
 
     def test_create_order(self):
         """Test creating an order via API"""
@@ -64,7 +76,7 @@ class OrderAPITests(APITestCase):
         url = '/api/orders/orders/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
 
     def test_get_order_detail(self):
         """Test retrieving a single order"""
@@ -72,4 +84,5 @@ class OrderAPITests(APITestCase):
         url = f'/api/orders/orders/{order.id}/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['total_amount'], '123.45')
+        # DRF DecimalField serializes to string in JSON, but in response.data it might be Decimal
+        self.assertEqual(str(response.data['total_amount']), '123.45')

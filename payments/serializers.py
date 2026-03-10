@@ -44,4 +44,4 @@ class PaymentSerializer(serializers.ModelSerializer):
 class PaymentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
-        fields = ('payment_method', 'amount')
+        fields = ('order', 'payment_method', 'amount')

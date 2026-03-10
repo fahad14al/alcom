@@ -45,16 +45,11 @@ class Product(models.Model):
     slug = models.SlugField(max_length=255, unique=True)
     description = models.TextField()
     base_price = models.DecimalField(max_digits=10, decimal_places=2)
+    stock = models.PositiveIntegerField(default=0)
 
     @property
     def price(self):
-        """Backward-compatible alias that returns price as float for tests.
-
-        Note: returning float keeps existing tests (which compare to floats)
-        passing without requiring changes across many test files. If you
-        prefer Decimal behavior, update tests to compare Decimal values.
-        """
-        return float(self.base_price)
+        return self.base_price
     
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='products')
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')

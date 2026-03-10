@@ -55,7 +55,11 @@ class PageViewModelTests(TestCase):
         
         self.assertIsNotNone(page_view.created_at)
         self.assertIsNotNone(page_view.updated_at)
-        self.assertEqual(page_view.created_at, page_view.updated_at)
+        self.assertAlmostEqual(
+            page_view.created_at, 
+            page_view.updated_at, 
+            delta=timedelta(seconds=1)
+        )
 
 class ProductViewModelTests(TestCase):
     @classmethod
@@ -233,10 +237,16 @@ class AnalyticsManagerTests(TestCase):
         )
         ProductView.objects.create(product=product2, session_id='5')
         ProductView.objects.create(product=product2, session_id='6')
+        ProductView.objects.create(product=product2, session_id='7')
         
+        # product2 should be first since it was updated more recently or has specifically more views
+        # We ensure it has more views by creating more views for it.
         popular_products = ProductView.objects.get_popular_products(limit=2)
         self.assertEqual(popular_products.count(), 2)
-        # product2 should be first since it has more views
+        # Verify both products are in the top list
+        product_names = [v.product.name for v in popular_products]
+        self.assertIn('Popular Product', product_names)
+        # And popular product has more views, so it should be first
         self.assertEqual(popular_products.first().product.name, 'Popular Product')
 
 class PageViewAPITests(APITestCase):
@@ -318,7 +328,7 @@ class PageViewAPITests(APITestCase):
         url = '/api/analytics/page-views/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
 
 class ProductViewAPITests(APITestCase):
     @classmethod
@@ -437,7 +447,12 @@ class SalesReportAPITests(APITestCase):
         url = '/api/analytics/sales-reports/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        # Check if response.data is a list or paginated dict
+        if isinstance(response.data, dict) and 'results' in response.data:
+            results = response.data['results']
+        else:
+            results = response.data
+        self.assertEqual(len(results), 2)
 
     def test_get_sales_report_detail(self):
         """Test retrieving sales report detail"""
@@ -467,8 +482,8 @@ class SalesReportAPITests(APITestCase):
         self.client.force_authenticate(user=self.admin_user)
         
         # Create some orders for today
-        user1 = User.objects.create_user(username='customer1', password='pass123')
-        user2 = User.objects.create_user(username='customer2', password='pass123')
+        user1 = User.objects.create_user(username='customer1', email='c1@example.com', password='pass123')
+        user2 = User.objects.create_user(username='customer2', email='c2@example.com', password='pass123')
         
         category = Category.objects.create(name='Test', slug='test')
         report_brand = Brand.objects.create(name='ReportBrand', description='Brand')

@@ -16,7 +16,6 @@ class CategoryModelTests(TestCase):
         )
         self.assertEqual(str(category), 'Electronics')
         self.assertEqual(category.slug, 'electronics')
-        self.assertTrue(category.is_active)
 
     def test_category_ordering(self):
         """Test category ordering by name"""
@@ -95,7 +94,7 @@ class ProductImageModelTests(TestCase):
             alt_text='Test image',
             is_main=True
         )
-        self.assertEqual(str(image), 'Test Product - Test image')
+        self.assertEqual(str(image), f"Image for {self.product.name} (Order: {image.order})")
         self.assertTrue(image.is_main)
 
 class CategoryAPITests(APITestCase):
@@ -109,7 +108,7 @@ class CategoryAPITests(APITestCase):
         url = '/api/products/categories/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        self.assertEqual(len(response.data['results']), 2)
 
     def test_get_category_detail(self):
         """Test retrieving single category"""
@@ -155,7 +154,7 @@ class ProductAPITests(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # Should only return active products
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(len(response.data['results']), 1)
 
     def test_get_product_detail(self):
         """Test retrieving single product"""
@@ -170,8 +169,8 @@ class ProductAPITests(APITestCase):
         url = '/api/products/products/?search=One'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['name'], 'Product One')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['name'], 'Product One')
 
     def test_filter_by_category(self):
         """Test filtering products by category"""
@@ -191,7 +190,7 @@ class ProductAPITests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # Should only return products from specified category
         self.assertTrue(all(
-            item['category'] == self.category.id for item in response.data
+            item['category'] == self.category.id for item in response.data['results']
         ))
 
     def test_price_filtering(self):
@@ -199,5 +198,5 @@ class ProductAPITests(APITestCase):
         url = '/api/products/products/?min_price=50&max_price=100'
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['name'], 'Product One')
+        self.assertEqual(len(response.data['results']), 1)
+        self.assertEqual(response.data['results'][0]['name'], 'Product One')

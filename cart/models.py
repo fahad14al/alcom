@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
+from decimal import Decimal
 from products.models import Product
 
 # 1. Coupon Model
@@ -17,18 +19,17 @@ class Coupon(models.Model):
     def __str__(self):
         return self.code
 
-    def calculate_discount(self, order_amount):
-        """Calculate the discount amount for a given order amount.
+    def is_valid(self):
+        now = timezone.now()
+        return self.is_active and self.valid_from <= now <= self.valid_to
 
-        Uses discount_percentage if present; respects max_discount_amount if set.
-        Returns a float for ease of use in tests.
-        """
+    def calculate_discount(self, order_amount):
         if not self.discount_percentage:
-            return 0.0
-        discount = float(order_amount) * float(self.discount_percentage) / 100.0
+            return Decimal('0.00')
+        discount = Decimal(str(order_amount)) * Decimal(str(self.discount_percentage)) / Decimal('100.00')
         if self.max_discount_amount:
-            discount = min(discount, float(self.max_discount_amount))
-        return discount
+            discount = min(discount, self.max_discount_amount)
+        return discount.quantize(Decimal('0.01'))
 
 # 2. Discount Model
 class Discount(models.Model):
@@ -72,8 +73,7 @@ class Cart(models.Model):
 
     @property
     def total_price(self):
-        """Return the total price for all items in the cart."""
-        total = 0.0
+        total = Decimal('0.00')
         for item in self.items.all():
             total += item.total_price
         return total

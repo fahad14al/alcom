@@ -14,7 +14,6 @@ from .filters import ProductFilter
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    lookup_field = 'slug'
 
     @action(detail=True, methods=['get'])
     def products(self, request, slug=None):
@@ -30,7 +29,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class BrandViewSet(viewsets.ModelViewSet):
     queryset = Brand.objects.all()
     serializer_class = BrandSerializer
-    lookup_field = 'slug'
 
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
@@ -43,7 +41,6 @@ class ProductViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'description', 'tags__name']
     ordering_fields = ['base_price', 'created_at', 'name']
     ordering = ['-created_at']
-    lookup_field = 'slug'
 
     def get_serializer_class(self):
         if self.action == 'retrieve':

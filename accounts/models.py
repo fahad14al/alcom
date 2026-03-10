@@ -1,14 +1,21 @@
-# Create your models here.
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-from django.conf import settings # Recommended way to import the User model
+from django.conf import settings
 
-# 1. User (extend AbstractUser)
-# Use 'class User(AbstractUser):' if you are defining this in a new app
-# and setting AUTH_USER_MODEL to 'your_app.User' in settings.py.
-# If you are NOT changing AUTH_USER_MODEL but still need an 'extension',
-# you'd use a OneToOneField on the UserProfile model.
-# Assuming you ARE extending AbstractUser:
+class UserManager(BaseUserManager):
+    def create_user(self, username, email=None, password=None, **extra_fields):
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(username, email, password, **extra_fields)
 
 class User(AbstractUser):
     """
@@ -19,6 +26,8 @@ class User(AbstractUser):
     """
     # Example custom field
     phone_number = models.CharField(max_length=15, blank=True, null=True)
+
+    objects = UserManager()
 
     groups = models.ManyToManyField(
         'auth.Group',
@@ -82,6 +91,7 @@ class Address(models.Model):
     street_address = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100, blank=True)
+    postal_code = models.CharField(max_length=20, blank=True)
     country = models.CharField(max_length=100)
     address_type = models.CharField(max_length=50, default='shipping')
 
@@ -93,7 +103,7 @@ class Address(models.Model):
         verbose_name_plural = "Addresses"
 
     def __str__(self):
-        return f"{self.street_address}, {self.city}, {self.state}"
+        return f"{self.street_address}, {self.city}, {self.state} {self.postal_code}".strip()
 
 # ---
 
