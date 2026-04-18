@@ -133,10 +133,10 @@ WSGI_APPLICATION = 'alcom_project.wsgi.application'
 import dj_database_url
 
 DATABASES = {
-    'default': config(
-        'DATABASE_URL',
-        default=f'postgresql://{config("DB_USER", default="postgres")}:{config("DB_PASSWORD", default="password")}@{config("DB_HOST", default="localhost")}:{config("DB_PORT", default="5432")}/{config("DB_NAME", default="alcom_db")}',
-        cast=dj_database_url.parse
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL', default='postgres://postgres:password@localhost:5432/alcom_db'),
+        conn_max_age=600,
+        conn_health_checks=True,
     )
 }
 
