@@ -24,6 +24,13 @@ class User(AbstractUser):
     If you modify this, you MUST set AUTH_USER_MODEL = 'your_app_name.User' 
     in your settings.py before running initial migrations.
     """
+    class Types(models.TextChoices):
+        BUYER = "BUYER", "Buyer"
+        SELLER = "SELLER", "Seller"
+
+    type = models.CharField(
+        max_length=50, choices=Types.choices, default=Types.BUYER
+    )
     # Example custom field
     phone_number = models.CharField(max_length=15, blank=True, null=True)
 
@@ -129,3 +136,26 @@ class Wishlist(models.Model):
 
     def __str__(self):
         return f"Wishlist for {self.user.username}"
+
+# ---
+
+# 5. Store (For Sellers)
+class Store(models.Model):
+    """
+    A store profile for a seller user.
+    """
+    owner = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='store',
+        limit_choices_to={'type': User.Types.SELLER}
+    )
+    name = models.CharField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255, unique=True)
+    description = models.TextField(blank=True)
+    is_approved = models.BooleanField(default=False, help_text="Designates whether this store is approved to list products.")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name

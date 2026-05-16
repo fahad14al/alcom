@@ -41,6 +41,20 @@ class ProductViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'description', 'tags__name']
     ordering_fields = ['base_price', 'created_at', 'name']
     ordering = ['-created_at']
+    
+    def get_permissions(self):
+        from .permissions import IsStoreOwnerOrReadOnly
+        from rest_framework.permissions import IsAuthenticatedOrReadOnly
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsAuthenticatedOrReadOnly(), IsStoreOwnerOrReadOnly()]
+        return super().get_permissions()
+
+    def perform_create(self, serializer):
+        # Automatically assign the user's store if they are a seller
+        if hasattr(self.request.user, 'store'):
+            serializer.save(store=self.request.user.store)
+        else:
+            serializer.save()
 
     def get_serializer_class(self):
         if self.action == 'retrieve':

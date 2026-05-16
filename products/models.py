@@ -53,6 +53,7 @@ class Product(models.Model):
     
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='products')
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
+    store = models.ForeignKey('accounts.Store', on_delete=models.CASCADE, related_name='products', null=True, blank=True)
     tags = models.ManyToManyField(Tag, blank=True, related_name='products')
     
     is_active = models.BooleanField(default=True)
